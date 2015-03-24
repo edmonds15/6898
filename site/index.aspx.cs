@@ -22,11 +22,11 @@ namespace _6898 {
                 if (reader.Read()) {
                     string role = reader.GetString(1);
                     if (role.Equals("Administrator")) {
-                        Response.Redirect("http://www.google.com");
+                        Response.Redirect("administrator/");
                     } else if (role.Equals("User")) {
-                        Response.Redirect("http://www.bing.com");
+                        Response.Redirect("user/");
                     } else {
-                        Response.Redirect("about:blank");
+                        Response.Redirect("view-only/");
                     }
                 }
             } catch {
