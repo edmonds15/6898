@@ -1,0 +1,6 @@
+C:\Users\blomquistco\Documents\Everything\6898Project\6898\site\bin\6898.dll.config
+C:\Users\blomquistco\Documents\Everything\6898Project\6898\site\bin\6898.dll
+C:\Users\blomquistco\Documents\Everything\6898Project\6898\site\bin\6898.pdb
+C:\Users\blomquistco\Documents\Everything\6898Project\6898\site\obj\Release\6898.csprojResolveAssemblyReference.cache
+C:\Users\blomquistco\Documents\Everything\6898Project\6898\site\obj\Release\6898.dll
+C:\Users\blomquistco\Documents\Everything\6898Project\6898\site\obj\Release\6898.pdb
