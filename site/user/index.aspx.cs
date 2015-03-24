@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-<<<<<<< HEAD
-=======
 using System.Data.SqlClient;
->>>>>>> ec38012e911876963b376762b74859077ec8e190
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace _6898.administrator {
+namespace _6898.user {
     public partial class index : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
-<<<<<<< HEAD
-
-=======
-            Response.Write("Hello Administrator");
+            Response.Write("Hello User");
             string user = HttpContext.Current.User.Identity.Name.Split("\\".ToCharArray())[1];
             SqlConnection conn = new SqlConnection("Server=localhost;Database=Incident_Report;User Id=SA;Password=inventory38;");
             conn.Open();
@@ -26,14 +20,13 @@ namespace _6898.administrator {
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read()) {
                     string role = reader.GetString(1);
-                    if (!role.Equals("Administrator")) {
+                    if (!role.Equals("User")) {
                         Response.Redirect("..");
                     }
                 }
             } catch {
                 conn.Close();
             }
->>>>>>> ec38012e911876963b376762b74859077ec8e190
         }
     }
 }
