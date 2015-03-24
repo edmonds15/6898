@@ -1,6 +1,0 @@
-C:\Users\phippenj\Documents\6898 Project\6898\site\bin\6898.dll.config
-C:\Users\phippenj\Documents\6898 Project\6898\site\bin\6898.dll
-C:\Users\phippenj\Documents\6898 Project\6898\site\bin\6898.pdb
-C:\Users\phippenj\Documents\6898 Project\6898\site\obj\Debug\6898.csprojResolveAssemblyReference.cache
-C:\Users\phippenj\Documents\6898 Project\6898\site\obj\Debug\6898.dll
-C:\Users\phippenj\Documents\6898 Project\6898\site\obj\Debug\6898.pdb
