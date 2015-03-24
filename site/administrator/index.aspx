@@ -1,7 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="bin/6898.dll" Inherits="_6898.administrator.index" %>
 
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html lang='en' ng-app='incidentAdminApp'>
 <head>
     <meta charset='utf-8' />
@@ -18,19 +17,5 @@
 	<script type="text/javascript" src='js/controllers/controllers.js'></script>
 </head>
 <body>
-   
-=======
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-    <div>
-    
-    </div>
-    </form>
->>>>>>> ec38012e911876963b376762b74859077ec8e190
 </body>
 </html>
