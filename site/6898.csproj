@@ -68,6 +68,7 @@
     <Content Include="index.aspx" />
     <Content Include="services\dataService.js" />
     <Content Include="user\index.aspx" />
+    <Content Include="user\js\app.js" />
     <Content Include="view-only\index.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
