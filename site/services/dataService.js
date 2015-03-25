@@ -2,7 +2,7 @@
 
 dataServices.factory('dataSvc', ["$http", "$q", function ($http, $q) {
 
-    function getLocation() {
+    function getLocations() {
         var deferred = $q.defer();
         $http.get("/api/getLocations.aspx")
             .then(function (result) {
@@ -16,6 +16,6 @@ dataServices.factory('dataSvc', ["$http", "$q", function ($http, $q) {
     }
 
     return {
-        getLocation: getLocation
+        getLocations: getLocations
     };
 }]);

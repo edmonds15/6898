@@ -19,14 +19,18 @@
 
     <script type="text/javascript" src='js/app.js'></script>
 </head>
-<body>
+<body ng-controller ="UserCtrl">
     <div class ="container col-centered">
         <div class ="row">
             <div class ="col-xs-6">Date and Time</div>
             <div class ="col-xs-6">Incident Number</div>
         </div>
         <div class ="row">
-            <div class ="col-xs-6">Location of Incident</div>
+            <div class ="col-xs-6">
+                <md-select placeholder="Select a Location" ng-model="loc">
+                    <md-option ng-repeat="location in locations" value="{{location.id}}">{{location.name}}</md-option>
+                </md-select>
+            </div>
             <div class ="col-xs-6">Type of Incident</div>
         </div>
         <div class ="row">
@@ -38,7 +42,7 @@
             <textarea class="form-control" rows="8" id="comment"></textarea>
         </div>
     </div>
-    <p ng-controller ="UserCtrl">
+    <p>
         {{test}}
     </p>
 </body>
