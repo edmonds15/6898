@@ -63,8 +63,10 @@
     <Content Include="administrator\js\services\services.js" />
     <Content Include="administrator\partials\help.html" />
     <Content Include="administrator\partials\home.html" />
+    <Content Include="api\getLocations.aspx" />
     <Content Include="css\style.css" />
     <Content Include="index.aspx" />
+    <Content Include="services\dataService.js" />
     <Content Include="user\index.aspx" />
     <Content Include="view-only\index.aspx" />
     <Content Include="Web.config" />
@@ -76,6 +78,13 @@
     </Compile>
     <Compile Include="administrator\index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="api\getLocations.aspx.cs">
+      <DependentUpon>getLocations.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="api\getLocations.aspx.designer.cs">
+      <DependentUpon>getLocations.aspx</DependentUpon>
     </Compile>
     <Compile Include="index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>

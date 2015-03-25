@@ -7,9 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace _6898 {
+namespace _6898.api {
     
     
-    public partial class index {
+    public partial class getLocations {
     }
 }

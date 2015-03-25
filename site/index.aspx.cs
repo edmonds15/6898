@@ -9,7 +9,6 @@ using System.Web.UI.WebControls;
 namespace _6898 {
     public partial class index : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
-            Response.Write("Hello World");
             string user = HttpContext.Current.User.Identity.Name.Split("\\".ToCharArray())[1];
             Response.Write(user);
             SqlConnection conn = new SqlConnection("Server=localhost;Database=Incident_Report;User Id=SA;Password=inventory38;");
