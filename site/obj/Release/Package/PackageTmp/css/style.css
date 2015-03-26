@@ -1,9 +1,0 @@
-﻿.incident, .location, .date_after, .date_before, .search, .commentContains{
-    width:25em;
-}
-body {
-    text-align:center;
-}
-.comments {
-    border: 1px solid black;
-}
