@@ -1,9 +1,21 @@
 ﻿var incidentUserApp = angular.module('incidentUserApp', [
   'ngMaterial',
-  'dataServices'
+  'ngRoute',
+  'dataServices',
+  'incidentUserControllers'
 ]);
 
-incidentUserApp.controller("UserCtrl", ["$scope", "dataSvc", function ($scope, dataSvc) {
-    $scope.test = "Hello World!";
-    $scope.loc = dataSvc.getLocations();
+incidentUserApp.config(["$routeProvider", "$mdThemingProvider", function ($routeProvider, $mdThemingProvider) {
+    $routeProvider.when("/", {
+        templateUrl: "partials/newIncident.html",
+        controller: "NewIncidentCtrl",
+    }).when("/search", {
+        templateUrl: "partials/searchIncidents.html",
+        controller: "SearchIncidentCtrl",
+    }).otherwise({
+        redirectTo: '/'
+    });
+
+    $mdThemingProvider.theme('default');
 }]);
+

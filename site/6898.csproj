@@ -63,12 +63,19 @@
     <Content Include="administrator\js\services\services.js" />
     <Content Include="administrator\partials\help.html" />
     <Content Include="administrator\partials\home.html" />
+    <Content Include="api\getIncidentNumber.aspx" />
+    <Content Include="api\getIncidentTypes.aspx" />
     <Content Include="api\getLocations.aspx" />
+    <Content Include="api\recordIncident.aspx" />
+    <Content Include="api\searchIncidents.aspx" />
     <Content Include="css\style.css" />
     <Content Include="index.aspx" />
     <Content Include="services\dataService.js" />
+    <Content Include="user\js\controllers.js" />
     <Content Include="user\index.aspx" />
     <Content Include="user\js\app.js" />
+    <Content Include="user\partials\newIncident.html" />
+    <Content Include="user\partials\searchIncidents.html" />
     <Content Include="view-only\index.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -80,12 +87,40 @@
     <Compile Include="administrator\index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
     </Compile>
+    <Compile Include="api\getIncidentNumber.aspx.cs">
+      <DependentUpon>getIncidentNumber.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="api\getIncidentNumber.aspx.designer.cs">
+      <DependentUpon>getIncidentNumber.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="api\getIncidentTypes.aspx.cs">
+      <DependentUpon>getIncidentTypes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="api\getIncidentTypes.aspx.designer.cs">
+      <DependentUpon>getIncidentTypes.aspx</DependentUpon>
+    </Compile>
     <Compile Include="api\getLocations.aspx.cs">
       <DependentUpon>getLocations.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="api\getLocations.aspx.designer.cs">
       <DependentUpon>getLocations.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="api\recordIncident.aspx.cs">
+      <DependentUpon>recordIncident.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="api\recordIncident.aspx.designer.cs">
+      <DependentUpon>recordIncident.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="api\searchIncidents.aspx.cs">
+      <DependentUpon>searchIncidents.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="api\searchIncidents.aspx.designer.cs">
+      <DependentUpon>searchIncidents.aspx</DependentUpon>
     </Compile>
     <Compile Include="index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
@@ -102,6 +137,7 @@
     <Compile Include="user\index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
     </Compile>
+    <Compile Include="utilities\validate.cs" />
     <Compile Include="view-only\index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
