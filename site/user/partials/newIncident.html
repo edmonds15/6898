@@ -1,0 +1,31 @@
+﻿<h2>Report New Incident</h2>
+<ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a href="#/">New Incident</a></li>
+    <li role="presentation"><a href="#/search/">Search Incidents</a></li>
+</ul>
+<div class="row">
+    <div class="col-xs-6" ng-bind="currentTime"></div>
+    <div class="col-xs-6" ng-bind="incidentNumber">Incident Number: </div>
+</div>
+<div class="row">
+    <div class="col-xs-6">
+        <md-select class="location" placeholder="Choose a location" ng-model="loc">
+            <md-option ng-repeat="location in locations" value="{{location.id}}">{{location.name}}</md-option>
+        </md-select>
+    </div>
+    <div class="col-xs-6">
+        <md-select class="incident" placeholder="Choose an incident type" ng-model="inc">
+            <md-option ng-repeat="incident in incidents" value="{{incident.id}}">{{incident.type}}</md-option>
+        </md-select>
+    </div>
+</div>
+<md-input-container class="comments" flex>
+    <label>Comments</label>
+    <textarea ng-model="comment" columns="1" md-maxlength="500"></textarea>
+</md-input-container>
+<div class="row">
+    <div class="col-xs-12">
+        <md-button class="md-raised md-warn" ng-disabled="loadingIncidentRecord" ng-click="recordIncident($event)">Record Incident</md-button>
+        <md-progress-circular md-mode="indeterminate" ng-show="loadingIncidentRecord"></md-progress-circular>
+    </div>
+</div>

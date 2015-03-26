@@ -1,2 +1,8 @@
 *.dll
-6898.v12.suo
+*.sln
+*.csproj
+*.user
+*.config
+site/bin/*
+site/obj/*
+site/Properties/*

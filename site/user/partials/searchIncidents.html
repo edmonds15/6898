@@ -1,0 +1,44 @@
+﻿<h2>Search Reported Incidents</h2>
+<ul class="nav nav-tabs">
+    <li role="presentation"><a href="#/">New Incident</a></li>
+    <li role="presentation" class="active"><a href="#/search/">Search Incidents</a></li>
+</ul>
+
+<div class="row" >
+    <md-select class="location" placeholder="Location" ng-model="loc">
+        <md-option ng-repeat="location in locations" value="{{location.id}}">{{location.name}}</md-option>
+    </md-select>
+
+    <md-select class="incident" placeholder="Incident" ng-model="inc" style="margin-left: 2em;">
+        <md-option ng-repeat="incident in incidents" value="{{incident.id}}">{{incident.type}}</md-option>
+    </md-select>
+</div>
+
+<div class="row" layout-align="center" style="display:inline-block">
+    <md-input-container class="date_after" style="float:left;">
+        <label>Date After</label>
+        <input type="date" ng-model="date_after">
+    </md-input-container>
+
+    <md-input-container class="date_before" style="float:left;">
+        <label>Date Before</label>
+        <input type="date" ng-model="date_before">
+    </md-input-container>
+</div>
+
+<div class="row">
+    <md-input-container style="display:inline-block">
+        <label>Comment Contains</label>
+        <input ng-model="commentContains">
+    </md-input-container>
+</div>
+
+<div class="row">
+    <md-button class="md-raised md-primary search" ng-click="searchIncidents($event)">Search</md-button>
+</div>
+
+</ br>
+
+<div class="row">
+    
+</div>
