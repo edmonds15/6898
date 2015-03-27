@@ -1,30 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using _6898.utilities;
+using System.Data.SqlClient;
+using System.Web.Script.Serialization;
 
 namespace _6898.api {
-    public partial class getIncidentTypes : System.Web.UI.Page {
+    public partial class getUsers : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
-            List<Dictionary<String, String>> incidents = new List<Dictionary<String, String>>();
+            List<Dictionary<string, string>> users = new List<Dictionary<string, string>>();
             validate val = new validate();
             string connectInfo = val.localDatabaseConnect();
             SqlConnection conn = new SqlConnection(connectInfo);
             conn.Open();
             try {
-                string query = @"SELECT * FROM [Incident_Report].[dbo].[Incident] ORDER BY Id";
+                string query = "SELECT * FROM [Incident_Report].[dbo].[Users] ORDER BY Id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) {
-                    Dictionary<String, String> incident = new Dictionary<String, String>();
-                    incident.Add("id", reader.GetInt32(reader.GetOrdinal("Id")).ToString());
-                    incident.Add("type", reader.GetString(reader.GetOrdinal("Type")));
-                    incidents.Add(incident);
+                    Dictionary<string, string> user = new Dictionary<string, string>();
+                    user.Add("id", reader.GetInt32(reader.GetOrdinal("Id")).ToString());
+                    user.Add("username", reader.GetString(reader.GetOrdinal("Username")));
+                    user.Add("role", reader.GetString(reader.GetOrdinal("Role")));
+                    users.Add(user);
                 }
                 conn.Close();
             } catch {
@@ -32,8 +33,8 @@ namespace _6898.api {
             }
 
             JavaScriptSerializer serializer = new JavaScriptSerializer();
-            string incidentsJson = serializer.Serialize(incidents);
-            Response.Write(incidentsJson);
+            string usersJson = serializer.Serialize(users);
+            Response.Write(usersJson);
         }
     }
 }

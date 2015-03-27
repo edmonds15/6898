@@ -1,8 +1,9 @@
-*.dll
 *.sln
 *.csproj
 *.user
 *.config
+*.dll
+site/utilities/passwords.txt
 site/bin/*
 site/obj/*
 site/Properties/*

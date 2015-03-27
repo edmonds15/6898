@@ -10,13 +10,13 @@ using _6898.utilities;
 namespace _6898.administrator {
     public partial class index : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
-            Response.Write("Hello Administrator");
             string user = HttpContext.Current.User.Identity.Name.Split("\\".ToCharArray())[1];
             validate val = new validate();
             if (!val.isAdmin(user)) {
                 Response.Redirect("..");
             }
-
+            nameLiteral.Text = user;
+            roleLiteral.Text = "Administrator";
         }
     }
 }

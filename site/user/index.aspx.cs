@@ -16,7 +16,11 @@ namespace _6898.user {
                 Response.Redirect("..");
             }
             nameLiteral.Text = user;
-            roleLiteral.Text = "User";
+            if (val.isAdmin(user)) {
+                roleLiteral.Text = "Administrator";
+            } else {
+                roleLiteral.Text = "User";
+            }
         }
     }
 }

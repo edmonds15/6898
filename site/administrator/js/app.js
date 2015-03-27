@@ -2,7 +2,8 @@
   'ngMaterial',
   'ngRoute',
   'incidentAdminServices',
-  'incidentAdminControllers'
+  'incidentAdminControllers',
+  'incidentUserControllers'
 ]);
 
 incidentAdminApp.config(["$routeProvider", "$mdThemingProvider", function ($routeProvider, $mdThemingProvider) {
@@ -12,6 +13,15 @@ incidentAdminApp.config(["$routeProvider", "$mdThemingProvider", function ($rout
     }).when("/help", {
         templateUrl: "partials/help.html",
         controller: "HelpCtrl",
+    }).when("/users", {
+        templateUrl: "partials/changeUsers.html",
+        controller: "UsersCtrl",
+    }).when("/incidents", {
+        templateUrl: "partials/changeIncidents.html",
+        controller: "IncidentsCtrl",
+    }).when("/editContact", {
+        templateUrl: "partials/editContacts.html",
+        controller: "EditContactsCtrl",
     }).otherwise({
         redirectTo: '/'
     });

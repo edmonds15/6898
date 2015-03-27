@@ -1,9 +1,12 @@
 ﻿<ul class="nav nav-tabs" role="tablist">
     <li><a href="#/">Home</a></li>
-    <li class="active"><a href="#/help">Help</a></li>
+    <li><a href="#/help">Help</a></li>
     <li><a href="#/users">Add/Remove Users</a></li>
-    <li><a href="#/incidents">Edit/Remove Incidents</a></li>
+    <li class="active"><a href="#/incidents">Edit/Remove Incidents</a></li>
     <li><a href="#/editContact">Edit Contact Information</a></li>
     <li><a href="../user/">User Page</a></li>
 </ul>
-<h2>Help</h2>
+<h2>Change Incidents</h2>
+<div ng-repeat="incident in incidents">
+    {{incident.id}}
+</div>

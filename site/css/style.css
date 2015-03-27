@@ -7,3 +7,15 @@ body {
 .comments {
     border: 1px solid black;
 }
+
+.result {
+    border-top: black solid 1px;
+}
+
+.result:hover {
+    background-color: lightblue;
+}
+
+p {
+    margin-top: 2em;
+}

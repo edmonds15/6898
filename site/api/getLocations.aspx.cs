@@ -1,17 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using _6898.utilities;
 
 namespace _6898.api {
     public partial class getLocations : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
             List<Dictionary<string, string>> locations = new List<Dictionary<string, string>>();
-            SqlConnection conn = new SqlConnection("Server=SkyData;Database=Student;User Id=hr;Password=(((kelp>>8;");
+            validate val = new validate();
+            string connectInfo = val.skywardDatabaseConnect();
+            SqlConnection conn = new SqlConnection(connectInfo);
             conn.Open();
             try {
                 string query = @"SELECT * FROM  [Student].[dbo].[Entity] ORDER BY EntityID ASC";
@@ -35,6 +39,7 @@ namespace _6898.api {
                     }
                     locations.Add(location);
                 }
+                conn.Close();
             } catch (Exception error) {
                 conn.Close();
             }

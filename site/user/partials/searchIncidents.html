@@ -2,6 +2,7 @@
 <ul class="nav nav-tabs">
     <li role="presentation"><a href="#/">New Incident</a></li>
     <li role="presentation" class="active"><a href="#/search/">Search Incidents</a></li>
+    <li role="presentation"><a href="../administrator/">Administrator Page</a></li>
 </ul>
 
 <div class="row" >
@@ -34,11 +35,22 @@
 </div>
 
 <div class="row">
-    <md-button class="md-raised md-primary search" ng-click="searchIncidents($event)">Search</md-button>
+    <md-button class="md-raised md-primary search" ng-click="searchIncidents($event)" ng-disabled="loadingIncidents">Search</md-button>
+    <md-button class="md-accent md-raised md-hue-1 search" ng-click="clearFields($event)">Clear Fields</md-button>
+</div>
+
+<div class="row">
+    <md-progress-circular md-mode="indeterminate" ng-show="loadingIncidents"></md-progress-circular>
 </div>
 
 </ br>
 
 <div class="row">
-    
+    <h3>{{results_num}}</h3>
+    <div class="result" ng-repeat="result in results">
+        <h3><u>Incident Number: {{result.id}}</u></h3>
+        <p><b>Creation Time:</b> {{result.time}} - <b>Creator:</b> {{result.creator}}</p>
+        <p><b>Location:</b> {{result.location}} - <b>Incident:</b> {{result.type}}</p>
+        <p><b>Comment:</b> {{result.comment}}</p>
+    </div>
 </div>

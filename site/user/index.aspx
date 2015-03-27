@@ -5,12 +5,13 @@
 <html ng-app ="incidentUserApp">
 <head>
     <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
     <title>User - Incident Report</title>
 
     <link rel='stylesheet' href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/0.8.2/angular-material.min.css">
-    <link rel='stylesheet' href='/css/style.css'>
+    <link rel='stylesheet' href='../css/style.css'>
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-animate.min.js"></script>
@@ -28,7 +29,6 @@
         <h1>Incident Reporting Application - Edmonds School District</h1>
         <h2>Logged in as: <asp:Literal id="nameLiteral" runat="server" /> - <asp:Literal ID="roleLiteral" runat="server" /></h2>
         <div ng-view></div>
-        
     </div>
 </body>
 </html>

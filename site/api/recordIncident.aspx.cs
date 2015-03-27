@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using _6898.utilities;
 
 namespace _6898.api {
     public partial class recordIncident : System.Web.UI.Page {
@@ -13,7 +14,9 @@ namespace _6898.api {
             string incident = Request.QueryString["incident"];
             string comment = Request.QueryString["comment"];
             string user = HttpContext.Current.User.Identity.Name.Split("\\".ToCharArray())[1];
-            SqlConnection conn = new SqlConnection("Server=localhost;Database=Incident_Report;User Id=SA;Password=inventory38;");
+            validate val = new validate();
+            string connectInfo = val.localDatabaseConnect();
+            SqlConnection conn = new SqlConnection(connectInfo);
             conn.Open();
             try {
                 string query = @"INSERT INTO [Incident_Report].[dbo].[Incident_History] VALUES (@Type_Id, @Location_Id, @Comment, GETDATE(), @Username)";
@@ -23,6 +26,7 @@ namespace _6898.api {
                 cmd.Parameters.AddWithValue("@Comment", comment);
                 cmd.Parameters.AddWithValue("@Username", user);
                 cmd.ExecuteNonQuery();
+                conn.Close();
             } catch (Exception error) {
                 conn.Close();
             }

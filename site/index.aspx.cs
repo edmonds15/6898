@@ -13,11 +13,11 @@ namespace _6898 {
             string user = HttpContext.Current.User.Identity.Name.Split("\\".ToCharArray())[1];
             validate val = new validate();
             if (val.isAdmin(user)) {
-                Response.Redirect("/admin");
+                Response.Redirect("administrator/");
             } else if (val.isUser(user)) {
-                Response.Redirect("/user");
+                Response.Redirect("user/");
             } else {
-                Response.Redirect("/view-only");
+                Response.Redirect("view-only/");
             }
         }
     }
