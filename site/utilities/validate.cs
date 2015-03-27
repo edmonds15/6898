@@ -6,8 +6,8 @@ using System.Linq;
 using System.Web;
 
 namespace _6898.utilities {
-    public class validate {
-        public bool isAdmin(string username) {
+    public static class Validate {
+        public static bool isAdmin(string username) {
             string connectInfo = localDatabaseConnect();
             SqlConnection conn = new SqlConnection(connectInfo);
             conn.Open();
@@ -31,7 +31,7 @@ namespace _6898.utilities {
             }
         }
 
-        public bool isUser(string username) {
+        public static bool isUser(string username) {
             string connectInfo = localDatabaseConnect();
             SqlConnection conn = new SqlConnection(connectInfo);
             conn.Open();
@@ -55,7 +55,7 @@ namespace _6898.utilities {
             }
         }
 
-        public string localDatabaseConnect() {
+        public static string localDatabaseConnect() {
             StreamReader stream = new StreamReader("C:\\passwords\\passwords.csv");
             string data = stream.ReadLine();
             stream.Close();
@@ -64,7 +64,7 @@ namespace _6898.utilities {
             return "Server=" + connectInfo[0] + ";Database=" + connectInfo[1] + ";User Id=" + connectInfo[2] + ";Password=" + connectInfo[3];
         }
 
-        public string skywardDatabaseConnect() {
+        public static string skywardDatabaseConnect() {
             StreamReader stream = new StreamReader("C:\\passwords\\passwords.csv");
             stream.ReadLine();
             string data = stream.ReadLine();

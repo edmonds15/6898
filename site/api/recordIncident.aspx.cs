@@ -10,12 +10,14 @@ using _6898.utilities;
 namespace _6898.api {
     public partial class recordIncident : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
+            string user = HttpContext.Current.User.Identity.Name.Split("\\".ToCharArray())[1];
+            if (!_6898.utilities.Validate.isAdmin(user) && !_6898.utilities.Validate.isUser(user)) {
+                Response.End();
+            }
             string location = Request.QueryString["location"];
             string incident = Request.QueryString["incident"];
             string comment = Request.QueryString["comment"];
-            string user = HttpContext.Current.User.Identity.Name.Split("\\".ToCharArray())[1];
-            validate val = new validate();
-            string connectInfo = val.localDatabaseConnect();
+            string connectInfo = _6898.utilities.Validate.localDatabaseConnect();
             SqlConnection conn = new SqlConnection(connectInfo);
             conn.Open();
             try {

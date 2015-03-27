@@ -6,14 +6,12 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using _6898.utilities;
 
 namespace _6898.api {
     public partial class getIncidentTypes : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
             List<Dictionary<String, String>> incidents = new List<Dictionary<String, String>>();
-            validate val = new validate();
-            string connectInfo = val.localDatabaseConnect();
+            string connectInfo = _6898.utilities.Validate.localDatabaseConnect();
             SqlConnection conn = new SqlConnection(connectInfo);
             conn.Open();
             try {

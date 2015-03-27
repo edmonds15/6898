@@ -1,0 +1,39 @@
+﻿<div class="row">
+        <h1>Add New User</h1>
+</div>
+
+<div class="row">
+    <p>
+        <div class="col-xs-2"></div>
+        <div class="col-xs-8">
+            <label for="user">Name:</label>
+            <input type="text" class="form-control" id="user" ng-model="user" />
+        </div>
+        <div class="col-xs-2"></div>
+    </p>
+</div>
+<div class="row">
+    <p>
+        <div class="col-xs-2"></div>
+        <div class="col-xs-8">
+            <label for="role">Role:</label>
+            <select class="form-control" id="role" ng-model="role" name="role">
+                <option value="User">User</option>
+                <option value="Administrator">Administrator</option>
+            </select>
+        </div>
+        <div class="col-xs-2"></div>
+    </p>
+</div>
+<div class="row">
+    <p>
+        <div class="col-xs-2"></div>
+        <div class="col-xs-5">
+            <md-button class="md-primary md-raised" ng-click="add()">Add User</md-button>
+        </div>
+        <div class="col-xs-4">
+            <md-button class="md-raised" ng-click="close()">Exit</md-button>
+        </div>
+        <div class="col-xs-1"></div>
+    </p>
+</div>

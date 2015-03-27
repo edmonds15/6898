@@ -111,3 +111,7 @@ incidentUserControllers.controller("SearchIncidentCtrl", ["$scope", "$location",
             });
     };
 }]);
+
+incidentUserControllers.controller("HelpCtrl", ["$scope", "$location", "$window", 'dataSvc', function ($scope, $location, $window, dataSvc) {
+
+}]);

@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using _6898.utilities;
 
 namespace _6898.api {
     public partial class searchIncidents : System.Web.UI.Page {
@@ -18,7 +19,8 @@ namespace _6898.api {
             string after = Request.QueryString["after"];
             string before = Request.QueryString["before"];
             List<Dictionary<string, string>> incidents = new List<Dictionary<string, string>>();
-            SqlConnection conn = new SqlConnection("Server=localhost;Database=Incident_Report;User Id=SA;Password=inventory38;");
+            string connectInfo = _6898.utilities.Validate.localDatabaseConnect();
+            SqlConnection conn = new SqlConnection(connectInfo);
             conn.Open();
             try {
                 string query = @"SELECT h.Id, h.Type_Id, h.Location_Id, h.Comment, h.Time, h.Creator, e.EntityId, e.[Entity Name], i.Id, i.Type FROM Incident_History h

@@ -10,13 +10,15 @@
     <title>Administrator - Incident Report</title>
 
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/0.8.2/angular-material.min.css">
-    <link rel='stylesheet' href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css">
+    <link rel='stylesheet' href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
     <link rel='stylesheet' href='../css/style.css'>
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-animate.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-aria.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angular_material/0.8.2/angular-material.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js"></script>
 	<script type="text/javascript" src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-route.js'></script>
 	<script type="text/javascript" src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.8/angular-resource.min.js'></script>	
 

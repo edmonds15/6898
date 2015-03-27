@@ -3,7 +3,8 @@
   'ngRoute',
   'incidentAdminServices',
   'incidentAdminControllers',
-  'incidentUserControllers'
+  'incidentUserControllers',
+  'ui.bootstrap'
 ]);
 
 incidentAdminApp.config(["$routeProvider", "$mdThemingProvider", function ($routeProvider, $mdThemingProvider) {

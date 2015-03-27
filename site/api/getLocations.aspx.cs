@@ -7,14 +7,12 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using _6898.utilities;
 
 namespace _6898.api {
     public partial class getLocations : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
             List<Dictionary<string, string>> locations = new List<Dictionary<string, string>>();
-            validate val = new validate();
-            string connectInfo = val.skywardDatabaseConnect();
+            string connectInfo = _6898.utilities.Validate.skywardDatabaseConnect();
             SqlConnection conn = new SqlConnection(connectInfo);
             conn.Open();
             try {

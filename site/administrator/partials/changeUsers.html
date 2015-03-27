@@ -9,14 +9,14 @@
 <div class="container">
     <h2>Change Users</h2>
     <div class="row">
-        <p><md-button class="md-primary md-raised" ng-click="addUser($event)">Add New User</md-button></p>
+        <p><md-button class="md-primary md-raised" ng-click="addaUser($event)">Add New User</md-button></p>
     </div>
     <div ng-repeat="user in users">
         <p>
             <div class="row">
                 <div class="col-xs-4"></div>
                 <div class="col-xs-2"><md-button class="md-warn md-raised" ng-click="deleteUser($event)" value="{{user.id}}">Remove User</md-button></div>
-                <div class="col-xs-2">{{user.username}} - {{user.role}}</div>
+                <div class="col-xs-2">{{user.username}}<br />{{user.role}}</div>
                 <div class="col-xs-4"></div>
             </div>
         </p>

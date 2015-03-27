@@ -1,9 +1,10 @@
-﻿<h2>Report New Incident</h2>
-<ul class="nav nav-tabs">
+﻿<ul class="nav nav-tabs">
     <li role="presentation" class="active"><a href="#/">New Incident</a></li>
     <li role="presentation"><a href="#/search/">Search Incidents</a></li>
+    <li role="presentation"><a href="#/help/">Help</a></li>
     <li role="presentation"><a href="../administrator/">Administrator Page</a></li>
 </ul>
+<h2>Report New Incident</h2>
 <div class="row">
     <div class="col-xs-6" ng-bind="currentTime"></div>
     <div class="col-xs-6" ng-bind="incidentNumber">Incident Number: </div>
@@ -13,7 +14,7 @@
         <md-select class="location" placeholder="Choose a location" ng-model="loc">
             <md-option ng-repeat="location in locations" value="{{location.id}}">{{location.name}}</md-option>
         </md-select>
-    </div>
+    </div>  
     <div class="col-xs-6">
         <md-select class="incident" placeholder="Choose an incident type" ng-model="inc" ng-change="updateNotify()">
             <md-option ng-repeat="incident in incidents" value="{{incident.id}}">{{incident.type}}</md-option>

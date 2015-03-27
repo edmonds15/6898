@@ -12,6 +12,9 @@ incidentUserApp.config(["$routeProvider", "$mdThemingProvider", function ($route
     }).when("/search", {
         templateUrl: "partials/searchIncidents.html",
         controller: "SearchIncidentCtrl",
+    }).when("/help", {
+        templateUrl: "partials/help.html",
+        controller: "HelpCtrl",
     }).otherwise({
         redirectTo: '/'
     });

@@ -12,12 +12,11 @@ namespace _6898.api {
     public partial class getUsers : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
             List<Dictionary<string, string>> users = new List<Dictionary<string, string>>();
-            validate val = new validate();
-            string connectInfo = val.localDatabaseConnect();
+            string connectInfo = _6898.utilities.Validate.localDatabaseConnect();
             SqlConnection conn = new SqlConnection(connectInfo);
             conn.Open();
             try {
-                string query = "SELECT * FROM [Incident_Report].[dbo].[Users] ORDER BY Id";
+                string query = "SELECT * FROM [Incident_Report].[dbo].[Users] ORDER BY Role ASC, Username ASC";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) {

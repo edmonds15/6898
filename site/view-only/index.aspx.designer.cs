@@ -11,5 +11,23 @@ namespace _6898.view_only {
     
     
     public partial class index {
+        
+        /// <summary>
+        /// nameLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal nameLiteral;
+        
+        /// <summary>
+        /// roleLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal roleLiteral;
     }
 }

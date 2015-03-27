@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using _6898.utilities;
 
 namespace _6898.api {
     public partial class getWhoNotify : System.Web.UI.Page {
@@ -15,7 +16,8 @@ namespace _6898.api {
             string incident = Request.QueryString["incident"];
 
             List<Dictionary<string, string>> notifys = new List<Dictionary<string, string>>();
-            SqlConnection conn = new SqlConnection("Server=localhost;Database=Incident_Report;User Id=SA;Password=inventory38;");
+            string connectInfo = _6898.utilities.Validate.localDatabaseConnect();
+            SqlConnection conn = new SqlConnection(connectInfo);
             conn.Open();
             try {
                 string query = @"SELECT n.Id, n.Code, n.Name As Department, c.Name, c.Title, c.Ext, c.Home_Number, c.Cell_Number FROM Notification n

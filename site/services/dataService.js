@@ -49,6 +49,17 @@ dataServices.factory('dataSvc', ["$http", "$q", function ($http, $q) {
         return deferred.promise;
     }
 
+    function deleteIncident(id) {
+        var deferred = $q.defer();
+        $http.get("../api/deleteIncident.aspx?id=" + id)
+            .success(function (result) {
+                deferred.resolve(result.data);
+            }, function (error) {
+                deferred.reject(error);
+            });
+        return deferred.promise;
+    }
+
     function searchIncidents(location, incident, comment, after, before) {
         var deferred = $q.defer();
         var url = "../api/searchIncidents.aspx?";
@@ -88,6 +99,29 @@ dataServices.factory('dataSvc', ["$http", "$q", function ($http, $q) {
         return deferred.promise;
     }
 
+    function deleteUser(id) {
+        var deferred = $q.defer();
+        $http.get("../api/deleteUser.aspx?id=" + id)
+            .then(function (result) {
+                var users = result.data;
+                deferred.resolve(users);
+            }, function (error) {
+                deferred.reject(error);
+            });
+        return deferred.promise;
+    }
+
+    function addUser(username, role) {
+        var deferred = $q.defer();
+        $http.get("../api/addUser.aspx?username=" + username + "&role=" + role)
+            .then(function (result) {
+                deferred.resolve(result.data);
+            }, function (error) {
+                deferred.reject(error);
+            });
+        return deferred.promise;
+    }
+
     function getIncidents() {
         var deferred = $q.defer();
         $http.get("../api/getIncidents.aspx")
@@ -116,8 +150,11 @@ dataServices.factory('dataSvc', ["$http", "$q", function ($http, $q) {
         getIncidentTypes: getIncidentTypes,
         getIncidentNumber: getIncidentNumber,
         recordIncident: recordIncident,
+        deleteIncident: deleteIncident,
         searchIncidents: searchIncidents,
         getUsers: getUsers,
+        addUser: addUser,
+        deleteUser: deleteUser,
         getIncidents: getIncidents,
         getWhoNotify: getWhoNotify
     };

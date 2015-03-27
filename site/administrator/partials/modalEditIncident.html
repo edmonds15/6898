@@ -1,0 +1,14 @@
+﻿<h2>Incident Number: {{mResult.id}}</h2>
+<p><b>Creation Time:</b> {{mResult.time}} - <b>Creator:</b> {{mResult.creator}}</p>
+<select class="location" placeholder="Choose a location" ng-model="loc">
+    <option ng-repeat="location in locations" value="{{location.id}}" ng-selected="locSel[location.id]">{{location.name}}</option>
+</select>
+
+<select class="incident" placeholder="Choose a Incident" ng-model="inc">
+    <option ng-repeat="incident in incidents" value="{{incident.id}}" ng-selected="incSel[incident.id]">{{incident.type}}</option>
+</select>
+
+<p><b>Comments: </b></p>
+<textarea cols="100" ng-model="commentEdit" style="padding-bottom:20px;" ></textarea><br />
+<md-button class="md-raised" ng-click="close2()">Close</md-button>
+<md-button class="md-primary md-raised" ng-click="save()">Save Incident</md-button>

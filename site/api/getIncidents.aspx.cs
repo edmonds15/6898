@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using _6898.utilities;
 using System.Data.SqlClient;
 using System.Web.Script.Serialization;
 
@@ -12,8 +11,7 @@ namespace _6898.api {
     public partial class getIncidents : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
             List<Dictionary<string, string>> incidents = new List<Dictionary<string, string>>();
-            validate val = new validate();
-            string connectInfo = val.localDatabaseConnect();
+            string connectInfo = _6898.utilities.Validate.localDatabaseConnect();
             SqlConnection conn = new SqlConnection(connectInfo);
             conn.Open();
             try {
