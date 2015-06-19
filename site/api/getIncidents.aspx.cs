@@ -21,10 +21,16 @@ namespace _6898.api {
                 while (reader.Read()) {
                     Dictionary<string, string> incident = new Dictionary<String, String>();
                     incident.Add("id", reader.GetInt32(reader.GetOrdinal("Id")).ToString());
-                    incident.Add("typeId", reader.GetInt32(reader.GetOrdinal("Type_Id")).ToString());
-                    incident.Add("locationId", reader.GetInt32(reader.GetOrdinal("Location_Id")).ToString());
-                    incident.Add("comment", reader.GetString(reader.GetOrdinal("Comment")));
-                    incident.Add("time", reader.GetDateTime(reader.GetOrdinal("Time")).ToString());
+                    incident.Add("num", reader.GetInt32(reader.GetOrdinal("Number")).ToString());
+                    incident.Add("typeId", reader.GetInt32(reader.GetOrdinal("TypeId")).ToString());
+                    incident.Add("locationId", reader.GetInt32(reader.GetOrdinal("LocationId")).ToString());
+                    string comment = reader.GetString(reader.GetOrdinal("Comment"));
+                    if (comment == "undefined") {
+                        incident.Add("comment", " ");
+                    } else {
+                        incident.Add("comment", comment);
+                    }
+                    incident.Add("time", reader.GetDateTime(reader.GetOrdinal("TimeDate")).ToString());
                     incident.Add("creator", reader.GetString(reader.GetOrdinal("Creator")));
                     incidents.Add(incident);
                 }

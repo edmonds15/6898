@@ -8,9 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
     <title>View-Only - Incident Report</title>
-
+    
+    <link rel='stylesheet' href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/0.8.2/angular-material.min.css">
-    <link rel='stylesheet' href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
     <link rel='stylesheet' href='../css/style.css'>
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>
@@ -46,12 +46,12 @@
 
         <div class="row" layout-align="center" style="display:inline-block">
             <md-input-container class="date_after" style="float:left;">
-                <label>Date After</label>
+                <label>Date Before/On Incident</label>
                 <input type="date" ng-model="date_after">
             </md-input-container>
 
             <md-input-container class="date_before" style="float:left;">
-                <label>Date Before</label>
+                <label>Date After Incident</label>
                 <input type="date" ng-model="date_before">
             </md-input-container>
         </div>
@@ -76,8 +76,8 @@
 
         <div class="row">
             <h3>{{results_num}}</h3>
-            <div class="result" ng-repeat="result in results">
-                <h3><u>Incident Number: {{result.id}}</u></h3>
+            <div class="resultNoHighlight" ng-repeat="result in results">
+                <h3><u>Incident Number: {{result.num}}</u></h3>
                 <p><b>Creation Time:</b> {{result.time}} - <b>Creator:</b> {{result.creator}}</p>
                 <p><b>Location:</b> {{result.location}} - <b>Incident:</b> {{result.type}}</p>
                 <p><b>Comment:</b> {{result.comment}}</p>

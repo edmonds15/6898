@@ -21,12 +21,12 @@
 
     <div class="row" layout-align="center" style="display:inline-block">
         <md-input-container class="date_after" style="float:left;">
-            <label>Date After</label>
+            <label>Date Before/On Incident</label>
             <input type="date" ng-model="date_after">
         </md-input-container>
 
         <md-input-container class="date_before" style="float:left;">
-            <label>Date Before</label>
+            <label>Date After Incident</label>
             <input type="date" ng-model="date_before">
         </md-input-container>
     </div>
@@ -50,8 +50,8 @@
 
 <div class="row">
     <h3>{{results_num}}</h3>
-    <div class="result" ng-repeat="result in results" ng-click="changeIncident($event)" data-id="{{result.id}}"style="cursor:pointer;">
-        <h3><u>Incident Number: {{result.id}}</u></h3>
+    <div class="result" ng-repeat="result in results" ng-click="changeIncident($event)" data-id="{{result.num}}"style="cursor:pointer;">
+        <h3><u>Incident Number: {{result.num}}</u></h3>
         <p><b>Creation Time:</b> {{result.time}} - <b>Creator:</b> {{result.creator}}</p>
         <p><b>Location:</b> {{result.location}} - <b>Incident:</b> {{result.type}}</p>
         <p><b>Comment:</b> {{result.comment}}</p>

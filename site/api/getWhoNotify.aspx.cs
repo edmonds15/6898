@@ -6,11 +6,15 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using _6898.utilities;
 
 namespace _6898.api {
     public partial class getWhoNotify : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
+
+            string user = HttpContext.Current.User.Identity.Name.Split("\\".ToCharArray())[1];
+            if (!_6898.utilities.Validate.isUser(user)) {
+                Response.End();
+            }
 
             string location = Request.QueryString["location"];
             string incident = Request.QueryString["incident"];

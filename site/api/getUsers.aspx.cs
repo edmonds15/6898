@@ -16,7 +16,7 @@ namespace _6898.api {
             SqlConnection conn = new SqlConnection(connectInfo);
             conn.Open();
             try {
-                string query = "SELECT * FROM [Incident_Report].[dbo].[Users] ORDER BY Role ASC, Username ASC";
+                string query = "SELECT * FROM [Incident_Report].[dbo].[Users] ORDER BY Role DESC, Username ASC";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) {

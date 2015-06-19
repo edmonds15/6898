@@ -38,9 +38,13 @@ dataServices.factory('dataSvc', ["$http", "$q", function ($http, $q) {
         return deferred.promise;
     }
 
-    function recordIncident(location, incident, comment) {
+    function recordIncident(number, location, incident, comment) {
         var deferred = $q.defer();
-        $http.get("../api/recordIncident.aspx?location=" + location + "&incident=" + incident + "&comment=" + comment)
+        var url = "../api/recordIncident.aspx?number=" + number + "&location=" + location + "&incident=" + incident;
+        if (comment != undefined) {
+            url += "&comment=" + comment;
+        }
+        $http.get(url)
             .success(function (result) {
                 deferred.resolve(result.data);
             }, function (error) {
@@ -76,7 +80,7 @@ dataServices.factory('dataSvc', ["$http", "$q", function ($http, $q) {
             url += "after=" + after + "&";
         }
         if (before != null && before != "" && before != undefined && before != "undefined") {
-            url += "before=" + before + "&";
+            url += "before=" + before;
         }
         $http.get(url)
             .success(function (result) {
@@ -134,6 +138,21 @@ dataServices.factory('dataSvc', ["$http", "$q", function ($http, $q) {
         return deferred.promise;
     }
 
+    function editIncident(id, num, time, creator, loc, inc, comment) {
+        var deferred = $q.defer();
+        var url = "../api/editIncident.aspx?id=" + id + "&num=" + num + "&time=" + time + "&creator=" + creator + "&loc=" + loc + "&inc=" + inc;
+        if (comment != undefined) {
+            url += "&comment=" + comment;
+        }
+        $http.get(url)
+            .then(function (result) {
+                deferred.resolve(result.data);
+            }, function (error) {
+                deferred.reject(error);
+            });
+        return deferred.promise;
+    }
+
     function getWhoNotify(incident) {
         var deferred = $q.defer();
         $http.get("../api/getWhoNotify.aspx?incident=" + incident)
@@ -156,6 +175,7 @@ dataServices.factory('dataSvc', ["$http", "$q", function ($http, $q) {
         addUser: addUser,
         deleteUser: deleteUser,
         getIncidents: getIncidents,
+        editIncident: editIncident,
         getWhoNotify: getWhoNotify
     };
 }]);

@@ -1,10 +1,9 @@
 ﻿var incidentUserControllers = angular.module('incidentUserControllers', ['dataServices']);
 
 incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$window", 'dataSvc', function ($scope, $location, $window, dataSvc) {
-    date = new Date(); 
-    $scope.currentTime = date.toLocaleString();
     $scope.loadingIncidentRecord = false;
     $scope.notify = [];
+    var n = 0;
 
     dataSvc.getLocations()
         .then(function (response) {
@@ -22,26 +21,51 @@ incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$
 
     dataSvc.getIncidentNumber()
         .then(function (response) {
-            $scope.incidentNumber = "Incident Number: " + response.count;
+            if (response.count == undefined) {
+                n = 1;
+            } else {
+                n = response.count;
+            }
+            $scope.num = n;
         }, function (error) {
             console.log(error);
         });
-
+    
     $scope.recordIncident = function (ev) {
+        if ($scope.loc == null) {
+            alert("Error: Location not set. Please choose a location.");
+            return;
+        }
+        if ($scope.inc == null) {
+            alert("Error: Incident type not set. Please choose an incident type.");
+            return;
+        }
         $scope.loadingIncidentRecord = true;
+        var comment = null;
+        if ($scope.comment != undefined) {
+            comment = $scope.comment;
+        }
 
-        dataSvc.recordIncident($scope.loc, $scope.inc, $scope.comment)
+        dataSvc.recordIncident(n, $scope.loc, $scope.inc, comment)
         .then(function (response) {
             dataSvc.getIncidentNumber()
             .then(function (response) {
-                $scope.incidentNumber = "Incident Number: " + response.count;
+                if (response.count == undefined) {
+                    n = 1;
+                } else {
+                    n = response.count;
+                }
+                $scope.num = n
             }, function (error) {
                 console.log(error);
             })
             $scope.loc = null;
             $scope.inc = null;
             $scope.comment = "";
+            $scope.prior = [];
+            $scope.notify = [];
             $scope.loadingIncidentRecord = false;
+            alert("Incident recorded successfully.");
         }, function (error) {
             alert("Error recording incident data, refresh page and try again.");
             $scope.loadingIncidentRecord = false;
@@ -57,6 +81,16 @@ incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$
                 $scope.notify = [];
                 console.log(error);
             });
+    }
+
+    $scope.updatePrior = function () {
+        dataSvc.searchIncidents($scope.loc, null, null, null, null)
+            .then(function (response) {
+                $scope.prior = response;
+            }, function (error) {
+                $scope.prior = [];
+                console.log(error);
+            })
     }
 }]);
 

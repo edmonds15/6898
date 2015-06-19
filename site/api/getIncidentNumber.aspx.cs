@@ -14,11 +14,11 @@ namespace _6898.api {
             SqlConnection conn = new SqlConnection(connectInfo);
             conn.Open();
             try {
-                string query = @"SELECT count(*)+1 AS [Counts] FROM [Incident_Report].[dbo].[Incident_History]";
+                string query = @"SELECT TOP 1 Number FROM [Incident_Report].[dbo].[Incident_History] ORDER BY Number DESC";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read()) {
-                    entries.Add("count", reader.GetInt32(reader.GetOrdinal("Counts")));
+                    entries.Add("count", reader.GetInt32(reader.GetOrdinal("Number")) + 1);
                 }
                 conn.Close();
             } catch {

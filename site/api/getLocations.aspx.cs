@@ -16,7 +16,7 @@ namespace _6898.api {
             SqlConnection conn = new SqlConnection(connectInfo);
             conn.Open();
             try {
-                string query = @"SELECT * FROM  [Student].[dbo].[Entity] ORDER BY EntityID ASC";
+                string query = @"SELECT * FROM  [Student].[dbo].[Entity] ORDER BY [Entity Name] ASC";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
 

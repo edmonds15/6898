@@ -16,6 +16,10 @@ body {
     background-color: lightblue;
 }
 
+.resultNoHighlight {
+    border-top: black solid 1px;
+}
+
 p {
     margin-top: 2em;
 }
