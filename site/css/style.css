@@ -1,31 +1,27 @@
 ﻿.incident, .location, .date_after, .date_before, .search, .commentContains{
-    width:25em;
+    width: 25em;
 }
+
 body {
-    text-align:center;
-}
-.comments {
-    /*border: 1px solid black;*/
+    text-align: center;
 }
 
 .result {
     border-top: black solid 1px;
 }
 
-.result:hover {
-    background-color: lightblue;
+.resultHighlight {
+    border-top: black solid 1px;
 }
 
-.resultNoHighlight {
-    border-top: black solid 1px;
+.resultHighlight:hover {
+    background-color: lightblue;
 }
 
 p {
     margin-top: 2em;
 }
+
 .form-control {
     width: 14em;
-}
-.row {
-    text-align: center;
 }

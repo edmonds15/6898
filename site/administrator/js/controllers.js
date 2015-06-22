@@ -1,11 +1,11 @@
 ﻿var incidentAdminControllers = angular.module('incidentAdminControllers', ['dataServices']);
 
 incidentAdminControllers.controller("HomeCtrl", ["$scope", "$location", "$window", function ($scope, $location, $window) {
-
+    // Any controls in home tab go here.
 }]);
 
 incidentAdminControllers.controller("HelpCtrl", ["$scope", "$location", "$window", function ($scope, $location, $window) {
-
+    // Any controls in help tab go here.
 }]);
 
 incidentAdminControllers.controller("UsersCtrl", ["$scope", "$location", "$window", "dataSvc", "$modal", function ($scope, $location, $window, dataSvc, $modal) {
@@ -15,22 +15,17 @@ incidentAdminControllers.controller("UsersCtrl", ["$scope", "$location", "$windo
         var modal = $modal.open({
             templateUrl: "partials/modalAddUser.html",
             controller: "AddUserModalCtrl",
-            size: 'sm'
+            size: "sm"
         });
 
         modal.result.then(function (info) {
-            console.log(info);
-            console.log(info.username);
-            console.log(info.role);
-            dataSvc.addUser(info.username, info.role)
-                .then(function (response) {
+            dataSvc.addUser(info.username, info.role).then(function (response) {
                 refreshUsers();
             }, function (error) {
                 console.log(error);
-            })
-            console.log(info);
+            });
         }, function () {
-            console.log("Model Dismissed");
+
         });
     }
 
@@ -43,20 +38,18 @@ incidentAdminControllers.controller("UsersCtrl", ["$scope", "$location", "$windo
         });
 
         modal.result.then(function () {
-            dataSvc.deleteUser(id)
-                .then(function (response) {
-                    refreshUsers();
-                }, function (error) {
-                    console.log(error);
-                });
+            dataSvc.deleteUser(id).then(function (response) {
+                refreshUsers();
+            }, function (error) {
+                console.log(error);
+            });
         }, function () {
-            console.log("Model Dismissed");
-        })
+
+        });
     }
 
     function refreshUsers() {
-        dataSvc.getUsers()
-        .then(function (response) {
+        dataSvc.getUsers().then(function (response) {
             $scope.users = response;
         }, function (error) {
             console.log(error);
@@ -66,23 +59,21 @@ incidentAdminControllers.controller("UsersCtrl", ["$scope", "$location", "$windo
 }]);
 
 incidentAdminControllers.controller("IncidentsCtrl", ["$scope", "$location", "$window", "dataSvc", "$modal", function ($scope, $location, $window, dataSvc, $modal) {
-
     $scope.loadingIncidents = false;
     $scope.results = [];
     $scope.results_num = "";
-    dataSvc.getLocations()
-        .then(function (response) {
-            $scope.locations = response;
-        }, function (error) {
-            console.log(error);
-        });
 
-    dataSvc.getIncidentTypes()
-        .then(function (response) {
-            $scope.incidents = response;
-        }, function (error) {
-            console.log(error);
-        });
+    dataSvc.getLocations().then(function (response) {
+        $scope.locations = response;
+    }, function (error) {
+        console.log(error);
+    });
+
+    dataSvc.getIncidentTypes().then(function (response) {
+        $scope.incidents = response;
+    }, function (error) {
+        console.log(error);
+    });
 
     $scope.clearFields = function (ev) {
         $scope.loc = null;
@@ -94,8 +85,9 @@ incidentAdminControllers.controller("IncidentsCtrl", ["$scope", "$location", "$w
         $scope.results = [];
     }
 
-    $scope.searchIncidents = function (ev) {
+    $scope.searchIncidents = function () {
         $scope.loadingIncidents = true;
+
         var after = "01/01/1980";
         if ($scope.date_after) {
             after = $scope.date_after.toLocaleDateString();
@@ -104,16 +96,16 @@ incidentAdminControllers.controller("IncidentsCtrl", ["$scope", "$location", "$w
         if ($scope.date_before) {
             before = $scope.date_before.toLocaleDateString();
         }
-        dataSvc.searchIncidents($scope.loc, $scope.inc, $scope.commentContains, after, before)
-            .then(function (response) {
-                $scope.loadingIncidents = false;
-                $scope.results = response;
-                $scope.results_num = "Number of Results: " + $scope.results.length;
-            }, function (error) {
-                $scope.results_num = "";
-                $scope.results = [];
-                $scope.loadingIncidents = false;
-                console.log(error);
+
+        dataSvc.searchIncidents($scope.loc, $scope.inc, $scope.commentContains, after, before).then(function (response) {
+            $scope.loadingIncidents = false;
+            $scope.results = response;
+            $scope.results_num = "Number of Results: " + $scope.results.length;
+        }, function (error) {
+            $scope.loadingIncidents = false;
+            $scope.results = [];
+            $scope.results_num = "";
+            console.log(error);
         });
     }
 
@@ -128,7 +120,7 @@ incidentAdminControllers.controller("IncidentsCtrl", ["$scope", "$location", "$w
         var modal = $modal.open({
             templateUrl: "partials/modalChangeIncident.html",
             controller: "ChangeIncidentModalCtrl",
-            size: 'lg',
+            size: "lg",
             resolve: {
                 chosen: function () {
                     return $scope.mResult;
@@ -142,7 +134,7 @@ incidentAdminControllers.controller("IncidentsCtrl", ["$scope", "$location", "$w
         }, function () {
             console.log("Model Dismissed");
         });
-    };
+    }
 
     function updateIncidents() {
         $scope.loadingIncidents = true;
@@ -169,8 +161,7 @@ incidentAdminControllers.controller("IncidentsCtrl", ["$scope", "$location", "$w
 }]);
 
 incidentAdminControllers.controller("EditContactsCtrl", ["$scope", "$location", "$window", "dataSvc", function ($scope, $location, $window, dataSvc) {
-    //Edit Which Codes correspond to which incidents
-    //Edit which contacts correspond to which codes.
+    //Figure out what to do with this.
 }]);
 
 incidentAdminControllers.controller("AddUserModalCtrl", ["$scope", "$modalInstance", function ($scope, $modalInstance) {
@@ -240,7 +231,7 @@ incidentAdminControllers.controller("ChangeIncidentModalCtrl", ["$scope", "$moda
         }, function () {
             console.log("Model Dismissed");
         });
-    };
+    }
 
     $scope.delete = function () {
         var id = chosen.id;

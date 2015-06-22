@@ -1,6 +1,6 @@
-﻿var dataServices = angular.module('dataServices', ['ngResource']);
+﻿var dataServices = angular.module('dataServices', ['ngResource', 'ngCookies']);
 
-dataServices.factory('dataSvc', ["$http", "$q", function ($http, $q) {
+dataServices.factory('dataSvc', ["$http", "$q", "$cookies", function ($http, $q, $cookies) {
 
     function getLocations() {
         var deferred = $q.defer();
@@ -51,6 +51,61 @@ dataServices.factory('dataSvc', ["$http", "$q", function ($http, $q) {
                 deferred.reject(error);
             });
         return deferred.promise;
+    }
+
+    function regroupNotify() {
+
+        var fd = new FormData();
+        fd.append("utf8", "\u2713");
+        fd.append("authenticity_token", "wslBMR7mYqzyxEd8+rcCkLO3EfLifoO0iE4cPKnc71E=");
+        fd.append("post_type[]", "web_email");
+        fd.append("smpp_alert", "smpp_alert");
+        fd.append("topic[publish_to_facebook]", "0");
+        fd.append("topic[started_by_id]", "13437781");
+        fd.append("topic[most_recent_editor_id]", "13437781");
+        fd.append("admin_group_id", "244429");
+        fd.append("map_info[polygon]", "");
+        fd.append("region[title]", "");
+        fd.append("topic[map_removed_users]", "");
+        fd.append("user_network_fb_connected", "false");
+        fd.append("post_group_ids", "244429");
+        fd.append("users_file", "");
+        fd.append("topic[cc_emails]", "");
+        fd.append("topic_from", "group");
+        fd.append("topic[reply_to]", "custom");
+        fd.append("topic[reply_to_text]", "phippenj@edmonds.wednet.edu");
+        fd.append("topic[designation][]", "1");
+        fd.append("topic[designation][]", "2");
+        fd.append("topic[designation][]", "3");
+        fd.append("topic[designation][]", "4");
+        fd.append("caller_id", "14257739376");
+        fd.append("topic[template_id]", "");
+        fd.append("topic[region_id]", "");
+        fd.append("topic[subject]", "Testing");
+        fd.append("topic[topic_files][0]", "");
+        fd.append("topic[body]", "<p>Testing...</p>");
+        fd.append("message", "Testing...");
+        fd.append("topic[save_template]", "");
+        fd.append("topic[edit_template]", "");
+        fd.append("topic[network_id]", "10356");
+        fd.append("send_test_msg", "true");
+        fd.append("date", "");
+        fd.append("hour", "1");
+        fd.append("minute", "0");
+        fd.append("meridian", "am");
+        fd.append("tzone", "CDT");
+        fd.append("frequency", "none");
+
+        return $http({
+            method: "POST",
+            url: "https://edmonds.regroup.com/topics/create",
+            headers: {
+                "Content-Type": undefined
+            },
+            data: fd,
+            xsrfCookieName: "myCookie",
+            transformRequest: function (data) { return data; }
+        });
     }
 
     function deleteIncident(id) {
@@ -169,6 +224,7 @@ dataServices.factory('dataSvc', ["$http", "$q", function ($http, $q) {
         getIncidentTypes: getIncidentTypes,
         getIncidentNumber: getIncidentNumber,
         recordIncident: recordIncident,
+        regroupNotify: regroupNotify,
         deleteIncident: deleteIncident,
         searchIncidents: searchIncidents,
         getUsers: getUsers,

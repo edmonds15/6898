@@ -2,17 +2,19 @@
     <li role="presentation"><a href="#/">New Incident</a></li>
     <li role="presentation" class="active"><a href="#/search/">Search Incidents</a></li>
     <li role="presentation"><a href="#/help/">Help</a></li>
-    <li role="presentation"><a href="../administrator/">Administrator Page</a></li>
 </ul>
 <h2>Search Reported Incidents</h2>
-<div class="row" >
-    <md-select class="location" placeholder="Location" ng-model="loc">
-        <md-option ng-repeat="location in locations" value="{{location.id}}">{{location.name}}</md-option>
-    </md-select>
-
-    <md-select class="incident" placeholder="Incident" ng-model="inc" style="margin-left: 2em;">
-        <md-option ng-repeat="incident in incidents" value="{{incident.id}}">{{incident.type}}</md-option>
-    </md-select>
+<div class="row">
+    <div class="col-xs-6">
+        <md-select class="location" placeholder="Location" ng-model="loc">
+            <md-option ng-repeat="location in locations" value="{{location.id}}">{{location.name}}</md-option>
+        </md-select>
+    </div>
+    <div class="col-xs-6">
+        <md-select class="incident" placeholder="Incident" ng-model="inc" style="margin-left: 2em;">
+            <md-option ng-repeat="incident in incidents" value="{{incident.id}}">{{incident.type}}</md-option>
+        </md-select>
+    </div>
 </div>
 
 <div class="row" layout-align="center" style="display:inline-block">
@@ -48,7 +50,7 @@
 <div class="row">
     <div class="col-xs-12">
         <h3>{{results_num}}</h3>
-        <div class="resultNoHighlight" ng-repeat="result in results">
+        <div class="result" ng-repeat="result in results">
             <h3><u>Incident Number: {{result.num}}</u></h3>
             <p><b>Creation Time:</b> {{result.time}} - <b>Creator:</b> {{result.creator}}</p>
             <p><b>Location:</b> {{result.location}} - <b>Incident:</b> {{result.type}}</p>

@@ -1,10 +1,9 @@
-﻿var incidentAdminApp = angular.module('incidentAdminApp', [
-  'ngMaterial',
-  'ngRoute',
-  'incidentAdminServices',
-  'incidentAdminControllers',
-  'incidentUserControllers',
-  'ui.bootstrap'
+﻿var incidentAdminApp = angular.module("incidentAdminApp", [
+  "ngMaterial",
+  "ngRoute",
+  "ngCookies",
+  "incidentAdminControllers",
+  "ui.bootstrap"
 ]);
 
 incidentAdminApp.config(["$routeProvider", "$mdThemingProvider", function ($routeProvider, $mdThemingProvider) {
@@ -27,5 +26,5 @@ incidentAdminApp.config(["$routeProvider", "$mdThemingProvider", function ($rout
         redirectTo: '/'
     });
 
-    $mdThemingProvider.theme('default');
+    $mdThemingProvider.theme("default");
 }]);

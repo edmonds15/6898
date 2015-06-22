@@ -5,31 +5,28 @@ incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$
     $scope.notify = [];
     var n = 0;
 
-    dataSvc.getLocations()
-        .then(function (response) {
-            $scope.locations = response;
-        }, function (error) {
-            console.log(error);
-        });
+    dataSvc.getLocations().then(function (response) {
+        $scope.locations = response;
+    }, function (error) {
+        console.log(error);
+    });
 
-    dataSvc.getIncidentTypes()
-        .then(function (response) {
-            $scope.incidents = response;
-        }, function (error) {
-            console.log(error);
-        });
+    dataSvc.getIncidentTypes().then(function (response) {
+        $scope.incidents = response;
+    }, function (error) {
+        console.log(error);
+    });
 
-    dataSvc.getIncidentNumber()
-        .then(function (response) {
-            if (response.count == undefined) {
-                n = 1;
-            } else {
-                n = response.count;
-            }
-            $scope.num = n;
-        }, function (error) {
-            console.log(error);
-        });
+    dataSvc.getIncidentNumber().then(function (response) {
+        if (response.count == undefined) {
+            n = 1;
+        } else {
+            n = response.count;
+        }
+        $scope.num = n;
+    }, function (error) {
+        console.log(error);
+    });
     
     $scope.recordIncident = function (ev) {
         if ($scope.loc == null) {
@@ -46,19 +43,17 @@ incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$
             comment = $scope.comment;
         }
 
-        dataSvc.recordIncident(n, $scope.loc, $scope.inc, comment)
-        .then(function (response) {
-            dataSvc.getIncidentNumber()
-            .then(function (response) {
+        dataSvc.recordIncident(n, $scope.loc, $scope.inc, comment).then(function (response) {
+            dataSvc.getIncidentNumber().then(function (response) {
                 if (response.count == undefined) {
                     n = 1;
                 } else {
                     n = response.count;
                 }
-                $scope.num = n
+                $scope.num = n;
             }, function (error) {
                 console.log(error);
-            })
+            });
             $scope.loc = null;
             $scope.inc = null;
             $scope.comment = "";
@@ -71,26 +66,28 @@ incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$
             $scope.loadingIncidentRecord = false;
             console.log(error);
         });
+
+        dataSvc.regroupNotify().then(function (response) {
+        }, function (error) {
+        });
     }
 
     $scope.updateNotify = function () {
-        dataSvc.getWhoNotify($scope.inc)
-            .then(function (response) {
-                $scope.notify = response;
-            }, function (error) {
-                $scope.notify = [];
-                console.log(error);
-            });
+        dataSvc.getWhoNotify($scope.inc).then(function (response) {
+            $scope.notify = response;
+        }, function (error) {
+            $scope.notify = [];
+            console.log(error);
+        });
     }
 
     $scope.updatePrior = function () {
-        dataSvc.searchIncidents($scope.loc, null, null, null, null)
-            .then(function (response) {
-                $scope.prior = response;
-            }, function (error) {
-                $scope.prior = [];
-                console.log(error);
-            })
+        dataSvc.searchIncidents($scope.loc, null, null, null, null).then(function (response) {
+            $scope.prior = response;
+        }, function (error) {
+            $scope.prior = [];
+            console.log(error);
+        });
     }
 }]);
 
@@ -98,19 +95,17 @@ incidentUserControllers.controller("SearchIncidentCtrl", ["$scope", "$location",
     $scope.loadingIncidents = false;
     $scope.results = [];
     $scope.results_num = "";
-    dataSvc.getLocations()
-        .then(function (response) {
-            $scope.locations = response;
-        }, function (error) {
-            console.log(error);
-        });
+    dataSvc.getLocations().then(function (response) {
+        $scope.locations = response;
+    }, function (error) {
+        console.log(error);
+    });
 
-    dataSvc.getIncidentTypes()
-        .then(function (response) {
-            $scope.incidents = response;
-        }, function (error) {
-            console.log(error);
-        });
+    dataSvc.getIncidentTypes().then(function (response) {
+        $scope.incidents = response;
+    }, function (error) {
+        console.log(error);
+    });
 
     $scope.clearFields = function (ev) {
         $scope.loc = null;
@@ -124,6 +119,7 @@ incidentUserControllers.controller("SearchIncidentCtrl", ["$scope", "$location",
 
     $scope.searchIncidents = function (ev) {
         $scope.loadingIncidents = true;
+
         var after = "01/01/1980";
         if ($scope.date_after) {
             after = $scope.date_after.toLocaleDateString();
@@ -132,18 +128,18 @@ incidentUserControllers.controller("SearchIncidentCtrl", ["$scope", "$location",
         if ($scope.date_before) {
             before = $scope.date_before.toLocaleDateString();
         }
-        dataSvc.searchIncidents($scope.loc, $scope.inc, $scope.commentContains, after, before)
-            .then(function (response) {
-                $scope.loadingIncidents = false;
-                $scope.results = response;
-                $scope.results_num = "Number of Results: " + $scope.results.length;
-            }, function (error) {
-                $scope.results_num = "";
-                $scope.results = [];
-                $scope.loadingIncidents = false;
-                console.log(error);
-            });
-    };
+
+        dataSvc.searchIncidents($scope.loc, $scope.inc, $scope.commentContains, after, before).then(function (response) {
+            $scope.loadingIncidents = false;
+            $scope.results = response;
+            $scope.results_num = "Number of Results: " + $scope.results.length;
+        }, function (error) {
+            $scope.results_num = "";
+            $scope.results = [];
+            $scope.loadingIncidents = false;
+            console.log(error);
+        });
+    }
 }]);
 
 incidentUserControllers.controller("HelpCtrl", ["$scope", "$location", "$window", 'dataSvc', function ($scope, $location, $window, dataSvc) {
