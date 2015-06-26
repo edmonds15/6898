@@ -16,16 +16,23 @@ namespace _6898.api {
 
             int id = Convert.ToInt32(Request.QueryString["id"]);
 
-            string connectionString = _6898.utilities.Validate.localDatabaseConnect();
-            SqlConnection conn = new SqlConnection(connectionString);
+            string connectInfo = _6898.utilities.Validate.localDatabaseConnect();
+            SqlConnection conn = new SqlConnection(connectInfo);
             try {
                 conn.Open();
                 string query = @"DELETE FROM Users WHERE Id = @Id;";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Id", id);
-                cmd.ExecuteNonQuery();
-            } finally { 
-                conn.Close(); 
+                int rows = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (rows == 1) {
+                    Response.Write(rows + " row affected from deleteUser. Success.");
+                } else {
+                    Response.Write(rows + " rows affected from deleteUser. Error.");
+                }
+            } catch (Exception err) { 
+                conn.Close();
+                Response.Write(err);
             }
         }
     }

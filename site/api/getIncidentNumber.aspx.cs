@@ -12,8 +12,8 @@ namespace _6898.api {
             Dictionary<String, int> entries = new Dictionary<String, int>();
             string connectInfo = _6898.utilities.Validate.localDatabaseConnect();
             SqlConnection conn = new SqlConnection(connectInfo);
-            conn.Open();
             try {
+                conn.Open();
                 string query = @"SELECT TOP 1 Number FROM [Incident_Report].[dbo].[Incident_History] ORDER BY Number DESC";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -21,13 +21,14 @@ namespace _6898.api {
                     entries.Add("count", reader.GetInt32(reader.GetOrdinal("Number")) + 1);
                 }
                 conn.Close();
-            } catch {
-                conn.Close();
-            }
 
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            string countsJson = serializer.Serialize(entries);
-            Response.Write(countsJson);
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                string countsJson = serializer.Serialize(entries);
+                Response.Write(countsJson);
+            } catch (Exception err) {
+                conn.Close();
+                Response.Write(err);
+            }
         }
     }
 }

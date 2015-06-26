@@ -18,9 +18,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-resource.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-cookies.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js"></script>
 
     <script type="text/javascript" src='js/app.js'></script>
@@ -29,20 +27,21 @@
 </head>
 <body ng-controller="SearchCtrl">
     <div class='container col-centered'>
-	    <h2>Incident Reporting Application (View-Only Page) - Edmonds School District</h2>
+	    <h2>6898 Incident Reporting Application (View-Only Page) - Edmonds School District</h2>
         <h3>Logged in as: <asp:Literal id="nameLiteral" runat="server" /><asp:Literal ID="roleLiteral" runat="server" /></h3>
         <ul class="nav nav-tabs">
             <li role="presentation" class="active"><a href="#/search/">Search Incidents</a></li>
         </ul>
+        <alert ng-repeat="alert in alerts" type="danger">{{alert.msg}}</alert>
         <h2>Search Reported Incidents</h2>
         <div class="row" >
             <div class="col-xs-6">
-                <md-select class="location" placeholder="Location" ng-model="loc">
+                <md-select class="location" placeholder="Search by Location" ng-model="loc">
                     <md-option ng-repeat="location in locations" value="{{location.id}}">{{location.name}}</md-option>
                 </md-select>
             </div>
             <div class="col-xs-6">
-                <md-select class="incident" placeholder="Incident" ng-model="inc" style="margin-left: 2em;">
+                <md-select class="incident" placeholder="Search by Incident" ng-model="inc">
                     <md-option ng-repeat="incident in incidents" value="{{incident.id}}">{{incident.type}}</md-option>
                 </md-select>
             </div>
@@ -53,7 +52,6 @@
                 <label>Date Before/On Incident</label>
                 <input type="date" ng-model="date_after">
             </md-input-container>
-
             <md-input-container class="date_before" style="float:left;">
                 <label>Date After Incident</label>
                 <input type="date" ng-model="date_before">

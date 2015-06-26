@@ -13,21 +13,31 @@ namespace _6898.api {
             if (!_6898.utilities.Validate.isAdmin(user)) {
                 Response.End();
             }
-            string id = Request.QueryString["id"];
+
+            int id = Convert.ToInt32(Request.QueryString["id"]);
             string num = Request.QueryString["num"];
             string time = Request.QueryString["time"];
             string creator = Request.QueryString["creator"];
             string location = Request.QueryString["loc"];
             string incident = Request.QueryString["inc"];
             string comment = Request.QueryString["comment"];
+
             string connectInfo = _6898.utilities.Validate.localDatabaseConnect();
             SqlConnection conn = new SqlConnection(connectInfo);
-            conn.Open();
             try {
+                conn.Open();
+
                 string query = @"DELETE FROM Incident_History WHERE Id = @Id";
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@Id", Convert.ToInt32(id));
-                cmd.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("@Id", id);
+                int rows = cmd.ExecuteNonQuery();
+                if (rows == 1) {
+                    Response.Write(rows + " row affected from editIncident-delete. Success.\r\n");
+                } else {
+                    Response.Write(rows + " rows affected from editIncident-delete. Error.");
+                    Response.End();
+                }
+
                 query = @"INSERT INTO Incident_History VALUES (@Number, @Type, @Location, @Comment, @Time, @User)";
                 cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Number", Convert.ToInt32(num));
@@ -40,7 +50,13 @@ namespace _6898.api {
                 }
                 cmd.Parameters.AddWithValue("@Time", time);
                 cmd.Parameters.AddWithValue("@User", creator);
-                cmd.ExecuteNonQuery();
+                rows = cmd.ExecuteNonQuery();
+                if (rows == 1) {
+                    Response.Write(rows + " row affected from editIncident-add. Success.");
+                } else {
+                    Response.Write(rows + " rows affected from editIncident-add. Error.");
+                }
+
                 conn.Close();
             } catch (Exception err) {
                 conn.Close();

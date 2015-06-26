@@ -15,11 +15,12 @@ namespace _6898.api {
             string comment = Request.QueryString["comment"];
             string after = Request.QueryString["after"];
             string before = Request.QueryString["before"];
+
             List<Dictionary<string, string>> incidents = new List<Dictionary<string, string>>();
             string connectInfo = _6898.utilities.Validate.localDatabaseConnect();
             SqlConnection conn = new SqlConnection(connectInfo);
-            conn.Open();
             try {
+                conn.Open();
                 string query = @"SELECT h.Id, h.Number, h.TypeId, h.LocationId, h.Comment, h.TimeDate, h.Creator, e.EntityID, e.[Entity Name], i.Id, i.Type FROM [Incident_Report].[dbo].[Incident_History] h
                                     JOIN [SKYDATA].[Student].[dbo].[Entity] e ON h.LocationId = e.EntityID
                                     JOIN [Incident_Report].[dbo].[Incident] i ON h.TypeId = i.Id
@@ -57,6 +58,7 @@ namespace _6898.api {
                     cmd.Parameters.AddWithValue("@TimeBefore", before);
                 }
                 SqlDataReader reader = cmd.ExecuteReader();
+
                 while (reader.Read()) {
                     Dictionary<string, string> inc = new Dictionary<string, string>();
                     inc.Add("id", reader.GetInt32(reader.GetOrdinal("Id")).ToString());
@@ -76,13 +78,14 @@ namespace _6898.api {
                     incidents.Add(inc);
                 }
                 conn.Close();
-            } catch (Exception error) {
-                conn.Close();
-            }
 
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            string incidentsJson = serializer.Serialize(incidents);
-            Response.Write(incidentsJson);
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                string incidentsJson = serializer.Serialize(incidents);
+                Response.Write(incidentsJson);
+            } catch (Exception err) {
+                conn.Close();
+                Response.Write(err);
+            }
         }
     }
 }

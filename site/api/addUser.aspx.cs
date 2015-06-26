@@ -27,9 +27,16 @@ namespace _6898.api {
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Username", username);
                 cmd.Parameters.AddWithValue("@Role", role);
-                cmd.ExecuteNonQuery();
-            } finally {
+                int rows = cmd.ExecuteNonQuery();
                 conn.Close();
+                if (rows == 1) {
+                    Response.Write(rows + " row affected from addUser. Success.");
+                } else {
+                    Response.Write(rows + " rows affected from addUser. Error.");
+                }
+            } catch (Exception err) {
+                conn.Close();
+                Response.Write(err);
             }
         }
     }

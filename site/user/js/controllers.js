@@ -1,19 +1,24 @@
-﻿var incidentUserControllers = angular.module('incidentUserControllers', ['dataServices']);
+﻿var incidentUserControllers = angular.module("incidentUserControllers", ["dataServices"]);
 
-incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$window", 'dataSvc', function ($scope, $location, $window, dataSvc) {
+incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$window", "$timeout", "dataSvc", function ($scope, $location, $window, $timeout, dataSvc) {
     $scope.loadingIncidentRecord = false;
     $scope.notify = [];
+    $scope.prior = [];
+    $scope.dangerAlerts = [];
+    $scope.otherAlerts = [];
     var n = 0;
 
     dataSvc.getLocations().then(function (response) {
         $scope.locations = response;
     }, function (error) {
+        $scope.dangerAlerts.push({ msg: "Uh-oh. Something went wrong with our location database. Refresh the page to try again. If the problem persists, contact" });
         console.log(error);
     });
 
     dataSvc.getIncidentTypes().then(function (response) {
         $scope.incidents = response;
     }, function (error) {
+        $scope.dangerAlerts.push({msg: "Uh-oh. Something went wrong with our incident type database. Refresh the page to try again. If the problem persists, contact" });
         console.log(error);
     });
 
@@ -25,16 +30,22 @@ incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$
         }
         $scope.num = n;
     }, function (error) {
+        $scope.dangerAlerts.push({ msg: "Uh-oh. Something went wrong with our incident database. Refresh the page to try again. If the problem persists, contact" });
         console.log(error);
     });
     
     $scope.recordIncident = function (ev) {
+        $scope.warningAlerts = [];
+        $scope.goodAlerts = [];
         if ($scope.loc == null) {
-            alert("Error: Location not set. Please choose a location.");
+            $scope.warningAlerts.push({ msg: "Please select the incident location." });
+            if ($scope.inc == null) {
+                $scope.warningAlerts.push({ msg: "Please select the incident type." });
+            }
             return;
         }
-        if ($scope.inc == null) {
-            alert("Error: Incident type not set. Please choose an incident type.");
+        else if ($scope.inc == null) {
+            $scope.warningAlerts.push({ msg: "Please select the incident type." });
             return;
         }
         $scope.loadingIncidentRecord = true;
@@ -44,6 +55,12 @@ incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$
         }
 
         dataSvc.recordIncident(n, $scope.loc, $scope.inc, comment).then(function (response) {
+            console.log(response);
+            var recordAlert = { msg: "incident recorded successfully " };
+            $scope.goodAlerts.push(recordAlert);
+            $timeout(function () {
+                $scope.goodAlerts.splice($scope.goodAlerts.indexOf(recordAlert), 1);
+            }, 5000);
             dataSvc.getIncidentNumber().then(function (response) {
                 if (response.count == undefined) {
                     n = 1;
@@ -52,6 +69,7 @@ incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$
                 }
                 $scope.num = n;
             }, function (error) {
+                $scope.dangerAlerts.push({ msg: "Uh-oh. Something went wrong with our incident database. Refresh the page to try again. If the problem persists, contact" });
                 console.log(error);
             });
             $scope.loc = null;
@@ -60,15 +78,15 @@ incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$
             $scope.prior = [];
             $scope.notify = [];
             $scope.loadingIncidentRecord = false;
-            alert("Incident recorded successfully.");
+            var regroupAlert = dataSvc.regroupNotify();
+            $scope.goodAlerts.push(regroupAlert);
+            $timeout(function () {
+                $scope.goodAlerts.splice($scope.goodAlerts.indexOf(regroupAlert), 1);
+            }, 5200);
         }, function (error) {
-            alert("Error recording incident data, refresh page and try again.");
+            $scope.dangerAlerts.push({ msg: "Uh-oh. Something went wrong with our incident database. Refresh the page to try again. If the problem persists, contact" });
             $scope.loadingIncidentRecord = false;
             console.log(error);
-        });
-
-        dataSvc.regroupNotify().then(function (response) {
-        }, function (error) {
         });
     }
 
@@ -77,6 +95,7 @@ incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$
             $scope.notify = response;
         }, function (error) {
             $scope.notify = [];
+            $scope.dangerAlerts.push({ msg: "Uh-oh. Something went wrong with our contacts database. Refresh the page to try again. If the problem persists, contact" });
             console.log(error);
         });
     }
@@ -86,24 +105,36 @@ incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$
             $scope.prior = response;
         }, function (error) {
             $scope.prior = [];
+            $scope.dangerAlerts.push({ msg: "Uh-oh. Something went wrong with our incident database. Refresh the page to try again. If the problem persists, contact" });
             console.log(error);
         });
     }
+
+    $scope.closeBadAlert = function (index) {
+        $scope.warningAlerts.splice(index, 1);
+    }
+
+    $scope.closeGoodAlert = function (index) {
+        $scope.goodAlerts.splice(index, 1);
+    }
 }]);
 
-incidentUserControllers.controller("SearchIncidentCtrl", ["$scope", "$location", "$window", 'dataSvc', function ($scope, $location, $window, dataSvc) {
+incidentUserControllers.controller("SearchIncidentCtrl", ["$scope", "$location", "$window", "dataSvc", function ($scope, $location, $window, dataSvc) {
     $scope.loadingIncidents = false;
+    $scope.alerts = [];
     $scope.results = [];
     $scope.results_num = "";
     dataSvc.getLocations().then(function (response) {
         $scope.locations = response;
     }, function (error) {
+        $scope.alerts.push({ msg: "Uh-oh. Something went wrong with our location database. Refresh the page to try again. If the problem persists, contact" });
         console.log(error);
     });
 
     dataSvc.getIncidentTypes().then(function (response) {
         $scope.incidents = response;
     }, function (error) {
+        $scope.alerts.push({ msg: "Uh-oh. Something went wrong with our incident type database. Refresh the page to try again. If the problem persists, contact" });
         console.log(error);
     });
 
@@ -137,11 +168,8 @@ incidentUserControllers.controller("SearchIncidentCtrl", ["$scope", "$location",
             $scope.results_num = "";
             $scope.results = [];
             $scope.loadingIncidents = false;
+            $scope.alerts.push({ msg: "Uh-oh. Something went wrong with our database. Refresh the page to try again. If the problem persists, contact" });
             console.log(error);
         });
     }
-}]);
-
-incidentUserControllers.controller("HelpCtrl", ["$scope", "$location", "$window", 'dataSvc', function ($scope, $location, $window, dataSvc) {
-
 }]);

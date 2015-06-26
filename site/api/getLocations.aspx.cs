@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
@@ -14,8 +13,8 @@ namespace _6898.api {
             List<Dictionary<string, string>> locations = new List<Dictionary<string, string>>();
             string connectInfo = _6898.utilities.Validate.skywardDatabaseConnect();
             SqlConnection conn = new SqlConnection(connectInfo);
-            conn.Open();
             try {
+                conn.Open();
                 string query = @"SELECT * FROM  [Student].[dbo].[Entity] ORDER BY [Entity Name] ASC";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -38,13 +37,14 @@ namespace _6898.api {
                     locations.Add(location);
                 }
                 conn.Close();
-            } catch (Exception error) {
-                conn.Close();
-            }
 
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            string locationsJson = serializer.Serialize(locations);
-            Response.Write(locationsJson);
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                string locationsJson = serializer.Serialize(locations);
+                Response.Write(locationsJson);
+            } catch (Exception err) {
+                conn.Close();
+                Response.Write(err);
+            }
         }
     }
 }

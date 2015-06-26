@@ -14,12 +14,12 @@
 </head>
 <body>
     <div class="container col-centered">
-        <h2>Incident Reporting Application (Permission Error)- Edmonds School District</h2>
+        <h2>6898 Incident Reporting Application (Permission Error) - Edmonds School District</h2>
         <h3>Logged in as: <asp:Literal id="nameLiteral" runat="server" /></h3>
     </div>
     <div class="row">
         <h3>Error: Access Denied</h3><br />
-        You do not have access to this page. If you believe this was in error, contact Information Systems in Technology Department.<br />
+        You do not have access to this page. If you believe this was in error, contact.<br />
         Click <a href="/">here</a> to access a lower level page.
     </div>
 </body>

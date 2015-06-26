@@ -18,9 +18,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-resource.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-cookies.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js"></script>
 
     <script type="text/javascript" src='js/app.js'></script>
@@ -29,7 +27,7 @@
 </head>
 <body>
     <div class='container col-centered'>
-	    <h2>Incident Reporting Application (Admin Page) - Edmonds School District</h2>
+	    <h2>6898 Incident Reporting Application (Admin Page) - Edmonds School District</h2>
         <h3>Logged in as: <asp:Literal id="nameLiteral" runat="server" /> - <asp:Literal ID="roleLiteral" runat="server" /></h3>
 		<div ng-view></div>
 	</div>

@@ -3,15 +3,16 @@
     <li role="presentation" class="active"><a href="#/search/">Search Incidents</a></li>
     <li role="presentation"><a href="#/help/">Help</a></li>
 </ul>
+<alert ng-repeat="alert in alerts" type="danger">{{alert.msg}}</alert>
 <h2>Search Reported Incidents</h2>
 <div class="row">
     <div class="col-xs-6">
-        <md-select class="location" placeholder="Location" ng-model="loc">
+        <md-select class="location" placeholder="Search by Location" ng-model="loc">
             <md-option ng-repeat="location in locations" value="{{location.id}}">{{location.name}}</md-option>
         </md-select>
     </div>
     <div class="col-xs-6">
-        <md-select class="incident" placeholder="Incident" ng-model="inc" style="margin-left: 2em;">
+        <md-select class="incident" placeholder="Search by Incident" ng-model="inc">
             <md-option ng-repeat="incident in incidents" value="{{incident.id}}">{{incident.type}}</md-option>
         </md-select>
     </div>
@@ -22,7 +23,6 @@
         <label>Date Before/On Incident</label>
         <input type="date" ng-model="date_after">
     </md-input-container>
-
     <md-input-container class="date_before" style="float:left;">
         <label>Date After Incident</label>
         <input type="date" ng-model="date_before">

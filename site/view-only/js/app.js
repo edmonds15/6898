@@ -1,18 +1,21 @@
-﻿var incidentViewOnlyApp = angular.module('incidentViewOnlyApp', [
-  'incidentViewOnlyControllers',
-  'ngMaterial'
+﻿var incidentViewOnlyApp = angular.module("incidentViewOnlyApp", [
+  "incidentViewOnlyControllers",
+  "ui.bootstrap",
+  "ngMaterial"
 ]);
 
-var incidentViewOnlyControllers = angular.module('incidentViewOnlyControllers', ['dataServices']);
+var incidentViewOnlyControllers = angular.module("incidentViewOnlyControllers", ["dataServices"]);
 
-incidentViewOnlyControllers.controller("SearchCtrl", ["$scope", "$location", "$window", 'dataSvc', function ($scope, $location, $window, dataSvc) {
+incidentViewOnlyControllers.controller("SearchCtrl", ["$scope", "$location", "$window", "dataSvc", function ($scope, $location, $window, dataSvc) {
     $scope.loadingIncidents = false;
+    $scope.alerts = [];
     $scope.results = [];
     $scope.results_num = "";
     dataSvc.getLocations()
         .then(function (response) {
             $scope.locations = response;
         }, function (error) {
+            $scope.alerts.push({ msg: "Uh-oh. Something went wrong with our location database. Refresh the page to try again. If the problem persists, contact" });
             console.log(error);
         });
 
@@ -20,6 +23,7 @@ incidentViewOnlyControllers.controller("SearchCtrl", ["$scope", "$location", "$w
         .then(function (response) {
             $scope.incidents = response;
         }, function (error) {
+            $scope.alerts.push({ msg: "Uh-oh. Something went wrong with our incident type database. Refresh the page to try again. If the problem persists, contact" });
             console.log(error);
         });
 
@@ -52,6 +56,7 @@ incidentViewOnlyControllers.controller("SearchCtrl", ["$scope", "$location", "$w
                 $scope.results_num = "";
                 $scope.results = [];
                 $scope.loadingIncidents = false;
+                $scope.alerts.push({ msg: "Uh-oh. Something went wrong with our database. Refresh the page to try again. If the problem persists, contact" });
                 console.log(error);
             });
     };

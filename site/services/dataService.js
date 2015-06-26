@@ -1,40 +1,49 @@
-﻿var dataServices = angular.module('dataServices', ['ngResource', 'ngCookies']);
+﻿var dataServices = angular.module("dataServices", ["ngResource"]);
 
-dataServices.factory('dataSvc', ["$http", "$q", "$cookies", function ($http, $q, $cookies) {
+dataServices.factory("dataSvc", ["$http", "$q", function ($http, $q) {
 
     function getLocations() {
         var deferred = $q.defer();
-        $http.get("../api/getLocations.aspx")
-            .then(function (result) {
-                var locations = result.data;
+        $http.get("../api/getLocations.aspx").then(function (result) {
+            var locations = result.data;
+            if (angular.isObject(locations)) {
                 deferred.resolve(locations);
-            }, function (error) {
-                deferred.reject(error);
-            });
+            } else {
+                deferred.reject(locations);
+            }
+        }, function (error) {
+            deferred.reject(error);
+        });
         return deferred.promise;
     }
 
     function getIncidentTypes() {
         var deferred = $q.defer();
-        $http.get("../api/getIncidentTypes.aspx")
-            .then(function (result) {
-                var incidents = result.data;
+        $http.get("../api/getIncidentTypes.aspx").then(function (result) {
+            var incidents = result.data;
+            if (angular.isObject(incidents)) {
                 deferred.resolve(incidents);
-            }, function (error) {
-                deferred.reject(error);
-            });
+            } else {
+                deferred.reject(incidents);
+            }
+        }, function (error) {
+            deferred.reject(error);
+        });
         return deferred.promise;
     }
 
     function getIncidentNumber() {
         var deferred = $q.defer();
-        $http.get("../api/getIncidentNumber.aspx")
-            .then(function (result) {
-                var number = result.data;
+        $http.get("../api/getIncidentNumber.aspx").then(function (result) {
+            var number = result.data;
+            if (angular.isObject(number)) {
                 deferred.resolve(number);
-            }, function (error) {
-                deferred.reject(error);
-            });
+            } else {
+                deferred.reject(number);
+            }
+        }, function (error) {
+            deferred.reject(error);
+        });
         return deferred.promise;
     }
 
@@ -44,78 +53,36 @@ dataServices.factory('dataSvc', ["$http", "$q", "$cookies", function ($http, $q,
         if (comment != undefined) {
             url += "&comment=" + comment;
         }
-        $http.get(url)
-            .success(function (result) {
-                deferred.resolve(result.data);
-            }, function (error) {
-                deferred.reject(error);
-            });
+        $http.get(url).then(function (result) {
+            var data = result.data;
+            if (data.charAt(0) == "1") {
+                deferred.resolve(data);
+            } else {
+                deferred.reject(data);
+            }
+        }, function (error) {
+            deferred.reject(error);
+        });
         return deferred.promise;
     }
 
     function regroupNotify() {
-
-        var fd = new FormData();
-        fd.append("utf8", "\u2713");
-        fd.append("authenticity_token", "wslBMR7mYqzyxEd8+rcCkLO3EfLifoO0iE4cPKnc71E=");
-        fd.append("post_type[]", "web_email");
-        fd.append("smpp_alert", "smpp_alert");
-        fd.append("topic[publish_to_facebook]", "0");
-        fd.append("topic[started_by_id]", "13437781");
-        fd.append("topic[most_recent_editor_id]", "13437781");
-        fd.append("admin_group_id", "244429");
-        fd.append("map_info[polygon]", "");
-        fd.append("region[title]", "");
-        fd.append("topic[map_removed_users]", "");
-        fd.append("user_network_fb_connected", "false");
-        fd.append("post_group_ids", "244429");
-        fd.append("users_file", "");
-        fd.append("topic[cc_emails]", "");
-        fd.append("topic_from", "group");
-        fd.append("topic[reply_to]", "custom");
-        fd.append("topic[reply_to_text]", "phippenj@edmonds.wednet.edu");
-        fd.append("topic[designation][]", "1");
-        fd.append("topic[designation][]", "2");
-        fd.append("topic[designation][]", "3");
-        fd.append("topic[designation][]", "4");
-        fd.append("caller_id", "14257739376");
-        fd.append("topic[template_id]", "");
-        fd.append("topic[region_id]", "");
-        fd.append("topic[subject]", "Testing");
-        fd.append("topic[topic_files][0]", "");
-        fd.append("topic[body]", "<p>Testing...</p>");
-        fd.append("message", "Testing...");
-        fd.append("topic[save_template]", "");
-        fd.append("topic[edit_template]", "");
-        fd.append("topic[network_id]", "10356");
-        fd.append("send_test_msg", "true");
-        fd.append("date", "");
-        fd.append("hour", "1");
-        fd.append("minute", "0");
-        fd.append("meridian", "am");
-        fd.append("tzone", "CDT");
-        fd.append("frequency", "none");
-
-        return $http({
-            method: "POST",
-            url: "https://edmonds.regroup.com/topics/create",
-            headers: {
-                "Content-Type": undefined
-            },
-            data: fd,
-            xsrfCookieName: "myCookie",
-            transformRequest: function (data) { return data; }
-        });
+        var alert = { type: "success", msg: "Regroup would have been notified." };
+        return alert;
     }
 
     function deleteIncident(id) {
         var deferred = $q.defer();
-        $http.get("../api/deleteIncident.aspx?id=" + id)
-            .success(function (result) {
-                deferred.resolve(result.data);
-            }, function (error) {
-                deferred.reject(error);
-            });
+        $http.get("../api/deleteIncident.aspx?id=" + id).then(function (result) {
+            var data = result.data;
+            if (data.charAt(0) == "1") {
+                deferred.resolve(data);
+            } else {
+                deferred.reject(data);
+            }
+        }, function (error) {
+            deferred.reject(error);
+        });
         return deferred.promise;
     }
 
@@ -137,59 +104,61 @@ dataServices.factory('dataSvc', ["$http", "$q", "$cookies", function ($http, $q,
         if (before != null && before != "" && before != undefined && before != "undefined") {
             url += "before=" + before;
         }
-        $http.get(url)
-            .success(function (result) {
-                deferred.resolve(result);
-            }, function (error) {
-                deferred.reject(error);
-            });
+        $http.get(url).then(function (result) {
+            var data = result.data;
+            if (angular.isObject(data)) {
+                deferred.resolve(data);
+            } else {
+                deferred.reject(data);
+            }
+        }, function (error) {
+            deferred.reject(error);
+        });
         return deferred.promise;
     }
 
     function getUsers() {
         var deferred = $q.defer();
-        $http.get("../api/getUsers.aspx")
-            .then(function (result) {
-                var users = result.data;
+        $http.get("../api/getUsers.aspx").then(function (result) {
+            var users = result.data;
+            if (angular.isObject(users)) {
                 deferred.resolve(users);
-            }, function (error) {
-                deferred.reject(error);
-            });
+            } else {
+                deferred.reject(users);
+            }
+        }, function (error) {
+            deferred.reject(error);
+        });
         return deferred.promise;
     }
 
     function deleteUser(id) {
         var deferred = $q.defer();
-        $http.get("../api/deleteUser.aspx?id=" + id)
-            .then(function (result) {
-                var users = result.data;
-                deferred.resolve(users);
-            }, function (error) {
-                deferred.reject(error);
-            });
+        $http.get("../api/deleteUser.aspx?id=" + id).then(function (result) {
+            var data = result.data;
+            if (data.charAt(0) == "1") {
+                deferred.resolve(data);
+            } else {
+                deferred.reject(data)
+            }
+        }, function (error) {
+            deferred.reject(error);
+        });
         return deferred.promise;
     }
 
     function addUser(username, role) {
         var deferred = $q.defer();
-        $http.get("../api/addUser.aspx?username=" + username + "&role=" + role)
-            .then(function (result) {
-                deferred.resolve(result.data);
-            }, function (error) {
-                deferred.reject(error);
-            });
-        return deferred.promise;
-    }
-
-    function getIncidents() {
-        var deferred = $q.defer();
-        $http.get("../api/getIncidents.aspx")
-            .then(function (result) {
-                var incidents = result.data;
-                deferred.resolve(incidents);
-            }, function (error) {
-                deferred.reject(error);
-            });
+        $http.get("../api/addUser.aspx?username=" + username + "&role=" + role).then(function (result) {
+            var data = result.data;
+            if (data.charAt(0) == "1") {
+                deferred.resolve(data);
+            } else {
+                deferred.reject(data);
+            }
+        }, function (error) {
+            deferred.reject(error);
+        });
         return deferred.promise;
     }
 
@@ -199,23 +168,51 @@ dataServices.factory('dataSvc', ["$http", "$q", "$cookies", function ($http, $q,
         if (comment != undefined) {
             url += "&comment=" + comment;
         }
-        $http.get(url)
-            .then(function (result) {
-                deferred.resolve(result.data);
-            }, function (error) {
-                deferred.reject(error);
-            });
+        $http.get(url).then(function (result) {
+            var data = result.data;
+            var split = data.split("\r\n");
+            if (split[0].charAt(0) == "1") {
+                if (split[1].charAt(0) == "1") {
+                    deferred.resolve(data);
+                } else {
+                    deferred.reject(data);
+                }
+            } else {
+                deferred.reject(data);
+            }
+        }, function (error) {
+            deferred.reject(error);
+        });
         return deferred.promise;
     }
 
     function getWhoNotify(incident) {
         var deferred = $q.defer();
-        $http.get("../api/getWhoNotify.aspx?incident=" + incident)
-            .then(function (result) {
-                deferred.resolve(result.data);
-            }, function (error) {
-                deferred.reject(error);
-            });
+        $http.get("../api/getWhoNotify.aspx?incident=" + incident).then(function (result) {
+            var data = result.data;
+            if (angular.isObject(data)) {
+                deferred.resolve(data);
+            } else {
+                deferred.reject(data);
+            }
+        }, function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    }
+
+    function getContacts() {
+        var deferred = $q.defer();
+        $http.get("../api/getContacts.aspx").then(function (result) {
+            var data = result.data;
+            if (angular.isObject(data)) {
+                deferred.resolve(data);
+            } else {
+                deferred.reject(data);
+            }
+        }, function (error) {
+            deferred.reject(error);
+        });
         return deferred.promise;
     }
 
@@ -230,8 +227,8 @@ dataServices.factory('dataSvc', ["$http", "$q", "$cookies", function ($http, $q,
         getUsers: getUsers,
         addUser: addUser,
         deleteUser: deleteUser,
-        getIncidents: getIncidents,
         editIncident: editIncident,
-        getWhoNotify: getWhoNotify
+        getWhoNotify: getWhoNotify,
+        getContacts: getContacts
     };
 }]);

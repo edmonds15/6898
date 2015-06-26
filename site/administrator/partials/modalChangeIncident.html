@@ -1,4 +1,5 @@
-﻿<h2>Incident Number: {{num}}</h2>
+﻿<alert ng-repeat="alert in alerts" type="danger">{{alert.msg}}</alert>
+<h2>Incident Number: {{num}}</h2>
 <p><b>Creation Time:</b> {{time}} - <b>Creator:</b> {{creator}}</p>
 <p><b>Location:</b> {{location}} - <b>Incident:</b> {{type}}</p>
 <p><b>Comment:</b> {{comment}}</p>

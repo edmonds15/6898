@@ -10,6 +10,6 @@
 namespace _6898.api {
     
     
-    public partial class getIncidents {
+    public partial class getContacts {
     }
 }

@@ -1,8 +1,4 @@
-﻿.incident, .location, .date_after, .date_before, .search, .commentContains{
-    width: 25em;
-}
-
-body {
+﻿body {
     text-align: center;
 }
 
@@ -16,6 +12,7 @@ body {
 
 .resultHighlight:hover {
     background-color: lightblue;
+    cursor: pointer;
 }
 
 p {
@@ -24,4 +21,8 @@ p {
 
 .form-control {
     width: 14em;
+}
+
+md-select {
+    margin-left: 13em;
 }

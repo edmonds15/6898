@@ -7,6 +7,8 @@
     <li><a href="../user/">User Page</a></li>
 </ul>
 <div class="container">
+    <alert ng-repeat="alert in dangerAlerts" type="danger">{{alert.msg}}</alert>
+    <alert ng-repeat="alert in goodAlerts" type="success" close="closeAlert($index)">{{alert.msg}}</alert>
     <h2>Change Users</h2>
     <div class="row">
         <p><md-button class="md-primary md-raised" ng-click="addaUser($event)">Add New User</md-button></p>

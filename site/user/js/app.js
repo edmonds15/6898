@@ -1,8 +1,9 @@
 ﻿var incidentUserApp = angular.module('incidentUserApp', [
-  'ngMaterial',
-  'ngRoute',
-  'dataServices',
-  'incidentUserControllers'
+  "ngMaterial",
+  "ngRoute",
+  "ui.bootstrap",
+  "dataServices",
+  "incidentUserControllers"
 ]);
 
 incidentUserApp.config(["$routeProvider", "$mdThemingProvider", function ($routeProvider, $mdThemingProvider) {
@@ -13,12 +14,11 @@ incidentUserApp.config(["$routeProvider", "$mdThemingProvider", function ($route
         templateUrl: "partials/searchIncidents.html",
         controller: "SearchIncidentCtrl",
     }).when("/help", {
-        templateUrl: "partials/help.html",
-        controller: "HelpCtrl",
+        templateUrl: "partials/help.html"
     }).otherwise({
-        redirectTo: '/'
+        redirectTo: "/"
     });
 
-    $mdThemingProvider.theme('default');
+    $mdThemingProvider.theme("default");
 }]);
 

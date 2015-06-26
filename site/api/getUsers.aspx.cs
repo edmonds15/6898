@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using _6898.utilities;
 using System.Data.SqlClient;
 using System.Web.Script.Serialization;
 
@@ -14,8 +13,8 @@ namespace _6898.api {
             List<Dictionary<string, string>> users = new List<Dictionary<string, string>>();
             string connectInfo = _6898.utilities.Validate.localDatabaseConnect();
             SqlConnection conn = new SqlConnection(connectInfo);
-            conn.Open();
             try {
+                conn.Open();
                 string query = "SELECT * FROM [Incident_Report].[dbo].[Users] ORDER BY Role DESC, Username ASC";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -27,13 +26,14 @@ namespace _6898.api {
                     users.Add(user);
                 }
                 conn.Close();
-            } catch {
-                conn.Close();
-            }
 
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            string usersJson = serializer.Serialize(users);
-            Response.Write(usersJson);
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                string usersJson = serializer.Serialize(users);
+                Response.Write(usersJson);
+            } catch (Exception err) {
+                conn.Close();
+                Response.Write(err);
+            }
         }
     }
 }

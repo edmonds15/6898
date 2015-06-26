@@ -23,9 +23,16 @@ namespace _6898.api {
                 string query = @"DELETE FROM Incident_History WHERE Id = @Id;";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Id", id);
-                cmd.ExecuteNonQuery();
-            } finally {
+                int rows = cmd.ExecuteNonQuery();
                 conn.Close();
+                if (rows == 1) {
+                    Response.Write(rows + " row affected from deleteIncident. Success.");
+                } else {
+                    Response.Write(rows + " rows affected from deleteIncident. Error.");
+                }
+            } catch (Exception err) {
+                conn.Close();
+                Response.Write(err);
             }
         }
     }

@@ -3,6 +3,9 @@
     <li role="presentation"><a href="#/search/">Search Incidents</a></li>
     <li role="presentation"><a href="#/help/">Help</a></li>
 </ul>
+<alert ng-repeat="alert in dangerAlerts" type="danger">{{alert.msg}}</alert>
+<alert ng-repeat="alert in warningAlerts" type="warning" close="closeBadAlert($index)">{{alert.msg}}</alert>
+<alert ng-repeat="alert in goodAlerts" type="success" close="closeGoodAlert($index)">{{alert.msg}}</alert>
 <h2>Report New Incident</h2>
 <div class="row">
     Incident Number: {{num}}
@@ -14,7 +17,7 @@
         </md-select>
     </div>  
     <div class="col-xs-6">
-        <md-select class="incident" placeholder="Choose an incident type" ng-model="inc" ng-change="updateNotify()">
+        <md-select class="incident" placeholder="Choose an incident" ng-model="inc" ng-change="updateNotify()">
             <md-option ng-repeat="incident in incidents" value="{{incident.id}}">{{incident.type}}</md-option>
         </md-select>
     </div>

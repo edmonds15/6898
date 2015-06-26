@@ -10,7 +10,6 @@ using System.Web.UI.WebControls;
 namespace _6898.api {
     public partial class getWhoNotify : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
-
             string user = HttpContext.Current.User.Identity.Name.Split("\\".ToCharArray())[1];
             if (!_6898.utilities.Validate.isUser(user)) {
                 Response.End();
@@ -22,8 +21,8 @@ namespace _6898.api {
             List<Dictionary<string, string>> notifys = new List<Dictionary<string, string>>();
             string connectInfo = _6898.utilities.Validate.localDatabaseConnect();
             SqlConnection conn = new SqlConnection(connectInfo);
-            conn.Open();
             try {
+                conn.Open();
                 string query = @"SELECT n.Id, n.Code, n.Name As Department, c.Name, c.Title, c.Ext, c.Home_Number, c.Cell_Number FROM Notification n
                                     LEFT JOIN Contact c ON n.Code = c.Code
                                     WHERE CAST(n.Incident_Id AS VARCHAR(20)) LIKE @Incident_Id";
@@ -54,13 +53,14 @@ namespace _6898.api {
                     notifys.Add(notify);
                 }
                 conn.Close();
-            } catch (Exception error) {
-                conn.Close();
-            }
 
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            string incidentsJson = serializer.Serialize(notifys);
-            Response.Write(incidentsJson);
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                string incidentsJson = serializer.Serialize(notifys);
+                Response.Write(incidentsJson);
+            } catch (Exception err) {
+                conn.Close();
+                Response.Write(err);
+            }
         }
     }
 }

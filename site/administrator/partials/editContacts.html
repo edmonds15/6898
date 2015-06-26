@@ -6,7 +6,11 @@
     <li class="active"><a href="#/editContact">Edit Contact Information</a></li>
     <li><a href="../user/">User Page</a></li>
 </ul>
+<alert ng-repeat="alert in alerts" type="danger">{{alert.msg}}</alert>
 <h2>Edit Contact Information</h2>
 <div class="row">
-
+    <div class="resultHighlight" ng-repeat="contact in contacts" ng-click="editContact($event)" data-id="{{contact.id}}">
+        <h3><u>{{contact.name}}: {{contact.title}}</u></h3>
+        <p><b>Extention:</b> {{contact.ext}} - <b>Home Number:</b> {{contact.home}} - <b>Cell Number:</b> {{contact.cell}}</p>
+    </div>
 </div>
