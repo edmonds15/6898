@@ -7,7 +7,7 @@ incidentAdminControllers.controller("UsersCtrl", ["$scope", "$location", "$windo
     $scope.goodAlerts = [];
     refreshUsers();
 
-    $scope.addaUser = function (ev) {
+    $scope.addaUser = function () {
         $scope.goodAlerts = [];
         var modal = $modal.open({
             templateUrl: "partials/modalAddUser.html",
@@ -33,6 +33,49 @@ incidentAdminControllers.controller("UsersCtrl", ["$scope", "$location", "$windo
         });
     }
 
+    $scope.editUser = function (ev) {
+        $scope.goodAlerts = [];
+        var id = ev.currentTarget.value;
+        var result = {};
+        for (var i = 0; i < $scope.users.length; i++) {
+            if ($scope.users[i].id == id) {
+                result = $scope.users[i];
+            }
+        }
+
+        var modal = $modal.open({
+            templateUrl: "partials/modalEditUser.html",
+            controller: "EditUserModalCtrl",
+            size: "sm",
+            resolve: {
+                chosen: function () { return  result }
+            }
+        });
+
+        modal.result.then(function (info) {
+            dataSvc.deleteUser(info.id).then(function (response) {
+                console.log(response);
+                dataSvc.addUser(info.user, info.role).then(function (response) {
+                    var alert = { msg: "User edited successfully." };
+                    $scope.goodAlerts.push(alert);
+                    $timeout(function () {
+                        $scope.goodAlerts.splice($scope.goodAlerts.indexOf(alert), 1);
+                    }, 5000);
+                    console.log(response);
+                    refreshUsers();
+                }, function (error) {
+                    $scope.dangerAlerts.push({ msg: dangerMessage });
+                    console.log(error);
+                });
+            }, function (error) {
+                $scope.dangerAlerts.push({ msg: dangerMessage });
+                console.log(error)
+            });
+        }, function () {
+            console.log("modalEditUser Dismissed.");
+        });
+    }
+
     $scope.deleteUser = function (ev) {
         $scope.goodAlerts = [];
         var id = ev.currentTarget.value;
@@ -44,7 +87,7 @@ incidentAdminControllers.controller("UsersCtrl", ["$scope", "$location", "$windo
 
         modal.result.then(function () {
             dataSvc.deleteUser(id).then(function (response) {
-                var alert = { msg: "User deleted successfully." };
+                var alert = { msg: "User removed successfully." };
                 $scope.goodAlerts.push(alert);
                 $timeout(function () {
                     $scope.goodAlerts.splice($scope.goodAlerts.indexOf(alert), 1);
@@ -115,7 +158,7 @@ incidentAdminControllers.controller("IncidentsCtrl", ["$scope", "$location", "$w
         var id = ev.currentTarget.getAttribute("data-id");
         var result = {};
         for (var i = 0; i < $scope.results.length; i++) {
-            if ($scope.results[i].num == id) {
+            if ($scope.results[i].id == id) {
                 result = $scope.results[i];
             }
         }
@@ -124,16 +167,13 @@ incidentAdminControllers.controller("IncidentsCtrl", ["$scope", "$location", "$w
             controller: "ChangeIncidentModalCtrl",
             size: "lg",
             resolve: {
-                chosen: function () {
-                    return result;
-                }
+                chosen: function () { return result; }
             }
         });
 
         modal.result.then(function (text) {
             $scope.results = [];
             var alert = { msg: text };
-            console.log(text);
             $scope.goodAlerts.push(alert);
             $timeout(function () {
                 $scope.goodAlerts.splice($scope.goodAlerts.indexOf(alert), 1);
@@ -229,6 +269,44 @@ incidentAdminControllers.controller("AddUserModalCtrl", ["$scope", "$modalInstan
     }
 }]);
 
+incidentAdminControllers.controller("EditUserModalCtrl", ["$scope", "$modalInstance", "dataSvc", "chosen", function ($scope, $modalInstance, dataSvc, chosen) {
+    $scope.user = chosen.username;
+    $scope.role = chosen.role;
+    $scope.dangerAlerts = [];
+    $scope.warningAlerts = [];
+
+    $scope.save = function () {
+        $scope.warningAlerts = [];
+        if ($scope.user == "") {
+            $scope.warningAlerts.push({ msg: "Please enter a username." });
+            return;
+        }
+        dataSvc.getUsers().then(function (response) {
+            var dupe = false;
+            angular.forEach(response, function (value) {
+                if (value.username.toLowerCase() == $scope.user.toLowerCase() && $scope.user.toLowerCase() != chosen.username.toLowerCase()) {
+                    $scope.warningAlerts.push({ msg: "That username already exists." });
+                    dupe = true;
+                }
+            });
+            if (!dupe) {
+                var info = { id: chosen.id, user: $scope.user, role: $scope.role };
+                $modalInstance.close(info);
+            }
+        }, function (error) {
+            $scope.dangerAlerts.push({ msg: dangerMessage });
+        });
+    }
+
+    $scope.close = function () {
+        $modalInstance.dismiss();
+    }
+
+    $scope.closeAlert = function (index) {
+        $scope.warningAlerts.splice(index, 1);
+    }
+}]);
+
 incidentAdminControllers.controller("RemoveUserModalCtrl", ["$scope", "$modalInstance", function ($scope, $modalInstance) {
     $scope.yes = function () {
         $modalInstance.close();
@@ -302,14 +380,15 @@ incidentAdminControllers.controller("ChangeIncidentModalCtrl", ["$scope", "$moda
     
 }]);
 
-incidentAdminControllers.controller("EditIncidentModalCtrl", ["$scope", "$rootScope", "$modalInstance", "dataSvc", "fields", function ($scope, $rootScope, $modalInstance, dataSvc, fields) {
+incidentAdminControllers.controller("EditIncidentModalCtrl", ["$scope", "$modalInstance", "dataSvc", "fields", function ($scope, $modalInstance, dataSvc, fields) {
     $scope.num = fields.num;
     $scope.time = fields.time;
     $scope.creator = fields.creator;
     $scope.loc = fields.location_id;
     $scope.inc = fields.type_id;
     $scope.commentEdit = fields.comment;
-    $scope.alerts = [];
+    $scope.dangerAlerts = [];
+    $scope.warningAlerts = [];
 
     dataSvc.getLocations().then(function (response) {
         $scope.locations = response;
@@ -325,12 +404,20 @@ incidentAdminControllers.controller("EditIncidentModalCtrl", ["$scope", "$rootSc
         console.log(error);
     });
 
-    $scope.close2 = function () {
+    $scope.close = function () {
         $modalInstance.dismiss();
     }
 
     $scope.save = function () {
-        var change = { id: fields.id, num: fields.num, time: fields.time, creator: fields.creator, loc: $scope.loc, inc: $scope.inc, comment: $scope.commentEdit };
+        var change = {
+            id: fields.id,
+            num: fields.num,
+            time: fields.time,
+            creator: fields.creator,
+            loc: $scope.loc,
+            inc: $scope.inc,
+            comment: $scope.commentEdit
+        };
         $modalInstance.close(change);
     }
 

@@ -8,7 +8,7 @@
 <alert ng-repeat="alert in goodAlerts" type="success" close="closeGoodAlert($index)">{{alert.msg}}</alert>
 <h2>Report New Incident</h2>
 <div class="row">
-    Incident Number: {{num}}
+    <h4>Incident Number: {{num}}</h4>
 </div>
 <div class="row">
     <div class="col-xs-6">
@@ -28,7 +28,7 @@
 </md-input-container>
 <div class="row">
     <div class="col-xs-12">
-        <md-button class="md-raised md-warn" ng-disabled="loadingIncidentRecord" ng-click="recordIncident($event)">Record Incident and Notify</md-button>
+        <md-button class="md-raised md-warn" ng-disabled="loadingIncidentRecord" ng-click="recordIncident($event)">Submit and Notify</md-button>
         <md-progress-circular md-mode="indeterminate" ng-show="loadingIncidentRecord"></md-progress-circular>
     </div>
 </div>

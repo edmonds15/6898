@@ -1,4 +1,5 @@
-﻿<alert ng-repeat="alert in alerts" type="danger">{{alert.msg}}</alert>
+﻿<alert ng-repeat="alert in dangerAlerts" type="danger">{{alert.msg}}</alert>
+<alert ng-repeat="alert in warningAlerts" type="warning" close="closeAlert($index)">{{alert.msg}}</alert>
 <h2>Incident Number: {{num}}</h2>
 <p><b>Creation Time:</b> {{time}} - <b>Creator:</b> {{creator}}</p>
 <select class="location" placeholder="Choose a location" ng-model="loc">
@@ -11,5 +12,5 @@
 
 <p><b>Comments: </b></p>
 <textarea cols="100" ng-model="commentEdit" style="padding-bottom:20px;" ></textarea><br />
-<md-button class="md-primary md-raised" ng-click="save()">Save Incident</md-button>
-<md-button class="md-raised" ng-click="close2()">Close</md-button>
+<md-button class="md-primary md-raised" ng-click="save()">Save</md-button>
+<md-button class="md-raised" ng-click="close()">Close</md-button>

@@ -1,9 +1,9 @@
 ﻿<ul class="nav nav-tabs" role="tablist">
     <li><a href="#/">Home</a></li>
     <li><a href="#/help">Help</a></li>
-    <li><a href="#/users">Add/Remove Users</a></li>
-    <li class="active"><a href="#/incidents">Edit/Remove Incidents</a></li>
-    <li><a href="#/editContact">Edit Contact Information</a></li>
+    <li><a href="#/users">Change Users</a></li>
+    <li class="active"><a href="#/incidents">Change Incidents</a></li>
+    <li><a href="#/editContact">Change Contacts</a></li>
     <li><a href="../user/">User Page</a></li>
 </ul>
 <alert ng-repeat="alert in dangerAlerts" type="danger">{{alert.msg}}</alert>
@@ -51,7 +51,7 @@
 
 <div class="row">
     <h3>{{results_num}}</h3>
-    <div class="resultHighlight" ng-repeat="result in results" ng-click="changeIncident($event)" data-id="{{result.num}}">
+    <div class="resultHighlight" ng-repeat="result in results" ng-click="changeIncident($event)" data-id="{{result.id}}">
         <h3><u>Incident Number: {{result.num}}</u></h3>
         <p><b>Creation Time:</b> {{result.time}} - <b>Creator:</b> {{result.creator}}</p>
         <p><b>Location:</b> {{result.location}} - <b>Incident:</b> {{result.type}}</p>

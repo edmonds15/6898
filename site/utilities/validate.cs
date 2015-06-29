@@ -10,8 +10,8 @@ namespace _6898.utilities {
         public static bool isAdmin(string username) {
             string connectInfo = localDatabaseConnect();
             SqlConnection conn = new SqlConnection(connectInfo);
-            conn.Open();
             try {
+                conn.Open();
                 string query = @"SELECT Username, Role FROM dbo.Users u WHERE u.Username = @Username AND (u.Role = 'Administrator' OR u.Role = 'User')";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Username", username);
@@ -34,8 +34,8 @@ namespace _6898.utilities {
         public static bool isUser(string username) {
             string connectInfo = localDatabaseConnect();
             SqlConnection conn = new SqlConnection(connectInfo);
-            conn.Open();
             try {
+                conn.Open();
                 string query = @"SELECT Username, Role FROM dbo.Users u WHERE u.Username = @Username AND (u.Role = 'Administrator' OR u.Role = 'User')";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Username", username);

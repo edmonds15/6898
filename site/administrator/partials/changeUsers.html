@@ -1,9 +1,9 @@
 ﻿<ul class="nav nav-tabs" role="tablist">
     <li><a href="#/">Home</a></li>
     <li><a href="#/help">Help</a></li>
-    <li class="active"><a href="#/users">Add/Remove Users</a></li>
-    <li><a href="#/incidents">Edit/Remove Incidents</a></li>
-    <li><a href="#/editContact">Edit Contact Information</a></li>
+    <li class="active"><a href="#/users">Change Users</a></li>
+    <li><a href="#/incidents">Change Incidents</a></li>
+    <li><a href="#/editContact">Change Contacts</a></li>
     <li><a href="../user/">User Page</a></li>
 </ul>
 <div class="container">
@@ -11,15 +11,18 @@
     <alert ng-repeat="alert in goodAlerts" type="success" close="closeAlert($index)">{{alert.msg}}</alert>
     <h2>Change Users</h2>
     <div class="row">
-        <p><md-button class="md-primary md-raised" ng-click="addaUser($event)">Add New User</md-button></p>
+        <p><md-button class="md-primary md-raised" ng-click="addaUser()">Add New User</md-button></p>
     </div>
     <div ng-repeat="user in users">
         <p>
             <div class="row">
                 <div class="col-xs-4"></div>
                 <div class="col-xs-2">{{user.username}}<br />{{user.role}}</div>
-                <div class="col-xs-2"><md-button class="md-warn md-raised" ng-click="deleteUser($event)" value="{{user.id}}">Remove</md-button></div>
-                <div class="col-xs-4"></div>
+                <div class="col-xs-3">
+                    <md-button class="md-primary md-raised" ng-click="editUser($event)" value="{{user.id}}">Edit</md-button>
+                    <md-button class="md-warn md-raised" ng-click="deleteUser($event)" value="{{user.id}}">Remove</md-button>
+                </div>
+                <div class="col-xs-3"></div>
             </div>
         </p>
     </div>

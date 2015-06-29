@@ -1,7 +1,7 @@
 ﻿<alert ng-repeat="alert in dangerAlerts" type="danger">{{alert.msg}}</alert>
 <alert ng-repeat="alert in warningAlerts" type="warning" close="closeAlert($index)">{{alert.msg}}</alert>
 <div class="row">
-    <h1>Add New User</h1>
+    <h1>Edit User</h1>
 </div>
 <div class="row">
     <p>
@@ -30,7 +30,7 @@
     <p>
         <div class="col-xs-2"></div>
         <div class="col-xs-4">
-            <md-button class="md-primary md-raised" ng-click="add()">Submit</md-button>
+            <md-button class="md-primary md-raised" ng-click="save()">Save</md-button>
         </div>
         <div class="col-xs-4">
             <md-button class="md-raised" ng-click="close()">Close</md-button>
