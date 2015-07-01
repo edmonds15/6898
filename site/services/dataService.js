@@ -67,7 +67,7 @@ dataServices.factory("dataSvc", ["$http", "$q", function ($http, $q) {
     }
 
     function regroupNotify() {
-        var alert = { type: "success", msg: "Regroup would have been notified." };
+        var alert = { msg: "Regroup would have been notified." };
         return alert;
     }
 
@@ -139,7 +139,7 @@ dataServices.factory("dataSvc", ["$http", "$q", function ($http, $q) {
             if (data.charAt(0) == "1") {
                 deferred.resolve(data);
             } else {
-                deferred.reject(data)
+                deferred.reject(data);
             }
         }, function (error) {
             deferred.reject(error);

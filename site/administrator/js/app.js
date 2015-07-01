@@ -1,8 +1,8 @@
 ﻿var incidentAdminApp = angular.module("incidentAdminApp", [
   "ngMaterial",
   "ngRoute",
-  "incidentAdminControllers",
-  "ui.bootstrap"
+  "ui.bootstrap",
+  "incidentAdminControllers"
 ]);
 
 incidentAdminApp.config(["$routeProvider", "$mdThemingProvider", function ($routeProvider, $mdThemingProvider) {
@@ -20,7 +20,7 @@ incidentAdminApp.config(["$routeProvider", "$mdThemingProvider", function ($rout
         templateUrl: "partials/editContacts.html",
         controller: "EditContactsCtrl",
     }).otherwise({
-        redirectTo: '/'
+        redirectTo: "/"
     });
 
     $mdThemingProvider.theme("default");

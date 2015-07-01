@@ -1,11 +1,12 @@
 ﻿var incidentViewOnlyApp = angular.module("incidentViewOnlyApp", [
-  "incidentViewOnlyControllers",
+  "ngMaterial",
   "ui.bootstrap",
-  "ngMaterial"
+  "incidentViewOnlyControllers"
 ]);
 
 var incidentViewOnlyControllers = angular.module("incidentViewOnlyControllers", ["dataServices"]);
-var dangerMessage = "FATAL: database failed. Refresh and try again, or contact."
+// The alert message that appears when a database request fails.
+var dangerMessage = "FATAL: database failed. Refresh and try again, or contact.";
 
 incidentViewOnlyControllers.controller("SearchCtrl",
         ["$scope", "dataSvc", function ($scope, dataSvc) {
@@ -13,6 +14,8 @@ incidentViewOnlyControllers.controller("SearchCtrl",
     $scope.alerts = [];
     $scope.results = [];
     $scope.results_num = "";
+
+    // Pull locations and put into dropdown box
     dataSvc.getLocations().then(function (response) {
         $scope.locations = response;
     }, function (error) {
@@ -20,6 +23,7 @@ incidentViewOnlyControllers.controller("SearchCtrl",
         console.log(error);
     });
 
+    // Pull incidents and put into dropdown box
     dataSvc.getIncidentTypes().then(function (response) {
         $scope.incidents = response;
     }, function (error) {
@@ -27,6 +31,7 @@ incidentViewOnlyControllers.controller("SearchCtrl",
         console.log(error);
     });
 
+    // Wipe all fields and results
     $scope.clearFields = function (ev) {
         $scope.loc = null;
         $scope.inc = null;
@@ -37,8 +42,10 @@ incidentViewOnlyControllers.controller("SearchCtrl",
         $scope.results = [];
     }
 
+    // Find reported incidents based on search fields, and display matches
     $scope.searchIncidents = function (ev) {
         $scope.loadingIncidents = true;
+        // Set dates to be 1980-2500 if not given
         var after = "01/01/1980";
         if ($scope.date_after) {
             after = $scope.date_after.toLocaleDateString();
@@ -59,5 +66,5 @@ incidentViewOnlyControllers.controller("SearchCtrl",
             $scope.alerts.push({ msg: dangerMessage });
             console.log(error);
         });
-    };
+    }
 }]);

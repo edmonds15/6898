@@ -7,7 +7,8 @@ incidentUserControllers.controller("NewIncidentCtrl",
     $scope.notify = [];
     $scope.prior = [];
     $scope.dangerAlerts = [];
-    $scope.otherAlerts = [];
+    $scope.warningAlerts = [];
+    $scope.goodAlerts = [];
     var n = 0;
 
     dataSvc.getLocations().then(function (response) {
@@ -80,6 +81,7 @@ incidentUserControllers.controller("NewIncidentCtrl",
             $scope.notify = [];
             $scope.loadingIncidentRecord = false;
             var regroupAlert = dataSvc.regroupNotify();
+            //TODO push to different alert arrays based on response
             $scope.goodAlerts.push(regroupAlert);
             $timeout(function () {
                 $scope.goodAlerts.splice($scope.goodAlerts.indexOf(regroupAlert), 1);

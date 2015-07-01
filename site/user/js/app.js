@@ -2,7 +2,6 @@
   "ngMaterial",
   "ngRoute",
   "ui.bootstrap",
-  "dataServices",
   "incidentUserControllers"
 ]);
 
