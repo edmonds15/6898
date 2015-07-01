@@ -2,7 +2,8 @@
 
 var dangerMessage = "FATAL: database failed. Refresh and try again, or contact."
 
-incidentAdminControllers.controller("UsersCtrl", ["$scope", "$location", "$window", "$modal", "$timeout", "dataSvc", function ($scope, $location, $window, $modal, $timeout, dataSvc) {
+incidentAdminControllers.controller("UsersCtrl",
+        ["$scope", "$modal", "$timeout", "dataSvc", function ($scope, $modal, $timeout, dataSvc) {
     $scope.dangerAlerts = [];
     $scope.goodAlerts = [];
     refreshUsers();
@@ -118,7 +119,8 @@ incidentAdminControllers.controller("UsersCtrl", ["$scope", "$location", "$windo
 
 }]);
 
-incidentAdminControllers.controller("IncidentsCtrl", ["$scope", "$location", "$window", "$modal", "$timeout", "dataSvc", function ($scope, $location, $window, $modal, $timeout, dataSvc) {
+incidentAdminControllers.controller("IncidentsCtrl",
+        ["$scope", "$modal", "$timeout", "dataSvc", function ($scope, $modal, $timeout, dataSvc) {
     $scope.loadingIncidents = false;
     $scope.dangerAlerts = [];
     $scope.goodAlerts = [];
@@ -194,7 +196,8 @@ incidentAdminControllers.controller("IncidentsCtrl", ["$scope", "$location", "$w
         if ($scope.date_before) {
             before = $scope.date_before.toLocaleDateString();
         }
-        dataSvc.searchIncidents($scope.loc, $scope.inc, $scope.commentContains, after, before).then(function (response) {
+        dataSvc.searchIncidents($scope.loc, $scope.inc, $scope.commentContains,
+                after, before).then(function (response) {
             $scope.loadingIncidents = false;
             $scope.results = response;
             $scope.results_num = "Number of Results: " + $scope.results.length;
@@ -208,7 +211,8 @@ incidentAdminControllers.controller("IncidentsCtrl", ["$scope", "$location", "$w
     }
 }]);
 
-incidentAdminControllers.controller("EditContactsCtrl", ["$scope", "$location", "$window", "dataSvc", function ($scope, $location, $window, dataSvc) {
+incidentAdminControllers.controller("EditContactsCtrl",
+        ["$scope", "dataSvc", function ($scope, dataSvc) {
     //Hopefully integrate ReGroup Member API
     $scope.alerts = [];
 
@@ -225,7 +229,8 @@ incidentAdminControllers.controller("EditContactsCtrl", ["$scope", "$location", 
     }
 }]);
 
-incidentAdminControllers.controller("AddUserModalCtrl", ["$scope", "$modalInstance", "dataSvc", function ($scope, $modalInstance, dataSvc) {
+incidentAdminControllers.controller("AddUserModalCtrl",
+        ["$scope", "$modalInstance", "dataSvc", function ($scope, $modalInstance, dataSvc) {
     $scope.dangerAlerts = [];
     $scope.warningAlerts = [];
 
@@ -269,7 +274,9 @@ incidentAdminControllers.controller("AddUserModalCtrl", ["$scope", "$modalInstan
     }
 }]);
 
-incidentAdminControllers.controller("EditUserModalCtrl", ["$scope", "$modalInstance", "dataSvc", "chosen", function ($scope, $modalInstance, dataSvc, chosen) {
+incidentAdminControllers.controller("EditUserModalCtrl",
+        ["$scope", "$modalInstance", "dataSvc", "chosen",
+        function ($scope, $modalInstance, dataSvc, chosen) {
     $scope.user = chosen.username;
     $scope.role = chosen.role;
     $scope.dangerAlerts = [];
@@ -284,7 +291,8 @@ incidentAdminControllers.controller("EditUserModalCtrl", ["$scope", "$modalInsta
         dataSvc.getUsers().then(function (response) {
             var dupe = false;
             angular.forEach(response, function (value) {
-                if (value.username.toLowerCase() == $scope.user.toLowerCase() && $scope.user.toLowerCase() != chosen.username.toLowerCase()) {
+                if (value.username.toLowerCase() == $scope.user.toLowerCase() &&
+                        $scope.user.toLowerCase() != chosen.username.toLowerCase()) {
                     $scope.warningAlerts.push({ msg: "That username already exists." });
                     dupe = true;
                 }
@@ -307,7 +315,8 @@ incidentAdminControllers.controller("EditUserModalCtrl", ["$scope", "$modalInsta
     }
 }]);
 
-incidentAdminControllers.controller("RemoveUserModalCtrl", ["$scope", "$modalInstance", function ($scope, $modalInstance) {
+incidentAdminControllers.controller("RemoveUserModalCtrl",
+        ["$scope", "$modalInstance", function ($scope, $modalInstance) {
     $scope.yes = function () {
         $modalInstance.close();
     }
@@ -317,7 +326,9 @@ incidentAdminControllers.controller("RemoveUserModalCtrl", ["$scope", "$modalIns
     }
 }]);
 
-incidentAdminControllers.controller("ChangeIncidentModalCtrl", ["$scope", "$modal", "$modalInstance", "dataSvc", "chosen", function ($scope, $modal, $modalInstance, dataSvc, chosen) {
+incidentAdminControllers.controller("ChangeIncidentModalCtrl",
+        ["$scope", "$modal", "$modalInstance", "dataSvc", "chosen",
+        function ($scope, $modal, $modalInstance, dataSvc, chosen) {
     $scope.num = chosen.num;
     $scope.time = chosen.time;
     $scope.creator = chosen.creator;
@@ -344,7 +355,8 @@ incidentAdminControllers.controller("ChangeIncidentModalCtrl", ["$scope", "$moda
         });
 
         modal.result.then(function (change) {
-            dataSvc.editIncident(id, change.num, change.time, change.creator, change.loc, change.inc, change.comment).then(function (response) {
+            dataSvc.editIncident(id, change.num, change.time, change.creator,
+                    change.loc, change.inc, change.comment).then(function (response) {
                 console.log(response);
                 $modalInstance.close("Incident edited successfully.");
             }, function (error) {
@@ -380,7 +392,9 @@ incidentAdminControllers.controller("ChangeIncidentModalCtrl", ["$scope", "$moda
     
 }]);
 
-incidentAdminControllers.controller("EditIncidentModalCtrl", ["$scope", "$modalInstance", "dataSvc", "fields", function ($scope, $modalInstance, dataSvc, fields) {
+incidentAdminControllers.controller("EditIncidentModalCtrl",
+        ["$scope", "$modalInstance", "dataSvc", "fields",
+        function ($scope, $modalInstance, dataSvc, fields) {
     $scope.num = fields.num;
     $scope.time = fields.time;
     $scope.creator = fields.creator;
@@ -423,7 +437,8 @@ incidentAdminControllers.controller("EditIncidentModalCtrl", ["$scope", "$modalI
 
 }]);
 
-incidentAdminControllers.controller("DeleteIncidentModalCtrl", ["$scope", "$modalInstance", function ($scope, $modalInstance) {
+incidentAdminControllers.controller("DeleteIncidentModalCtrl",
+        ["$scope", "$modalInstance", function ($scope, $modalInstance) {
     $scope.yes = function () {
         $modalInstance.close();
     }

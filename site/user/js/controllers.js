@@ -1,6 +1,8 @@
 ﻿var incidentUserControllers = angular.module("incidentUserControllers", ["dataServices"]);
+var dangerMessage = "FATAL: database failed. Refresh and try again, or contact.";
 
-incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$window", "$timeout", "dataSvc", function ($scope, $location, $window, $timeout, dataSvc) {
+incidentUserControllers.controller("NewIncidentCtrl",
+        ["$scope", "$timeout", "dataSvc", function ($scope, $timeout, dataSvc) {
     $scope.loadingIncidentRecord = false;
     $scope.notify = [];
     $scope.prior = [];
@@ -11,14 +13,14 @@ incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$
     dataSvc.getLocations().then(function (response) {
         $scope.locations = response;
     }, function (error) {
-        $scope.dangerAlerts.push({ msg: "Uh-oh. Something went wrong with our location database. Refresh the page to try again. If the problem persists, contact" });
+        $scope.dangerAlerts.push({ msg: dangerMessage });
         console.log(error);
     });
 
     dataSvc.getIncidentTypes().then(function (response) {
         $scope.incidents = response;
     }, function (error) {
-        $scope.dangerAlerts.push({msg: "Uh-oh. Something went wrong with our incident type database. Refresh the page to try again. If the problem persists, contact" });
+        $scope.dangerAlerts.push({msg: dangerMessage });
         console.log(error);
     });
 
@@ -30,13 +32,12 @@ incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$
         }
         $scope.num = n;
     }, function (error) {
-        $scope.dangerAlerts.push({ msg: "Uh-oh. Something went wrong with our incident database. Refresh the page to try again. If the problem persists, contact" });
+        $scope.dangerAlerts.push({ msg: dangerMessage });
         console.log(error);
     });
     
     $scope.recordIncident = function (ev) {
         $scope.warningAlerts = [];
-        $scope.goodAlerts = [];
         if ($scope.loc == null) {
             $scope.warningAlerts.push({ msg: "Please select the incident location." });
             if ($scope.inc == null) {
@@ -69,7 +70,7 @@ incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$
                 }
                 $scope.num = n;
             }, function (error) {
-                $scope.dangerAlerts.push({ msg: "Uh-oh. Something went wrong with our incident database. Refresh the page to try again. If the problem persists, contact" });
+                $scope.dangerAlerts.push({ msg: dangerMessage });
                 console.log(error);
             });
             $scope.loc = null;
@@ -84,7 +85,7 @@ incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$
                 $scope.goodAlerts.splice($scope.goodAlerts.indexOf(regroupAlert), 1);
             }, 5200);
         }, function (error) {
-            $scope.dangerAlerts.push({ msg: "Uh-oh. Something went wrong with our incident database. Refresh the page to try again. If the problem persists, contact" });
+            $scope.dangerAlerts.push({ msg: dangerMessage });
             $scope.loadingIncidentRecord = false;
             console.log(error);
         });
@@ -95,7 +96,7 @@ incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$
             $scope.notify = response;
         }, function (error) {
             $scope.notify = [];
-            $scope.dangerAlerts.push({ msg: "Uh-oh. Something went wrong with our contacts database. Refresh the page to try again. If the problem persists, contact" });
+            $scope.dangerAlerts.push({ msg: dangerMessage });
             console.log(error);
         });
     }
@@ -105,7 +106,7 @@ incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$
             $scope.prior = response;
         }, function (error) {
             $scope.prior = [];
-            $scope.dangerAlerts.push({ msg: "Uh-oh. Something went wrong with our incident database. Refresh the page to try again. If the problem persists, contact" });
+            $scope.dangerAlerts.push({ msg: dangerMessage });
             console.log(error);
         });
     }
@@ -119,7 +120,8 @@ incidentUserControllers.controller("NewIncidentCtrl", ["$scope", "$location", "$
     }
 }]);
 
-incidentUserControllers.controller("SearchIncidentCtrl", ["$scope", "$location", "$window", "dataSvc", function ($scope, $location, $window, dataSvc) {
+incidentUserControllers.controller("SearchIncidentCtrl",
+        ["$scope", "dataSvc", function ($scope, dataSvc) {
     $scope.loadingIncidents = false;
     $scope.alerts = [];
     $scope.results = [];
@@ -127,14 +129,14 @@ incidentUserControllers.controller("SearchIncidentCtrl", ["$scope", "$location",
     dataSvc.getLocations().then(function (response) {
         $scope.locations = response;
     }, function (error) {
-        $scope.alerts.push({ msg: "Uh-oh. Something went wrong with our location database. Refresh the page to try again. If the problem persists, contact" });
+        $scope.alerts.push({ msg: dangerMessage });
         console.log(error);
     });
 
     dataSvc.getIncidentTypes().then(function (response) {
         $scope.incidents = response;
     }, function (error) {
-        $scope.alerts.push({ msg: "Uh-oh. Something went wrong with our incident type database. Refresh the page to try again. If the problem persists, contact" });
+        $scope.alerts.push({ msg: dangerMessage });
         console.log(error);
     });
 
@@ -160,7 +162,8 @@ incidentUserControllers.controller("SearchIncidentCtrl", ["$scope", "$location",
             before = $scope.date_before.toLocaleDateString();
         }
 
-        dataSvc.searchIncidents($scope.loc, $scope.inc, $scope.commentContains, after, before).then(function (response) {
+        dataSvc.searchIncidents($scope.loc, $scope.inc, $scope.commentContains,
+                after, before).then(function (response) {
             $scope.loadingIncidents = false;
             $scope.results = response;
             $scope.results_num = "Number of Results: " + $scope.results.length;
@@ -168,7 +171,7 @@ incidentUserControllers.controller("SearchIncidentCtrl", ["$scope", "$location",
             $scope.results_num = "";
             $scope.results = [];
             $scope.loadingIncidents = false;
-            $scope.alerts.push({ msg: "Uh-oh. Something went wrong with our database. Refresh the page to try again. If the problem persists, contact" });
+            $scope.alerts.push({ msg: dangerMessage });
             console.log(error);
         });
     }

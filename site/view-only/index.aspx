@@ -74,7 +74,7 @@
             <md-progress-circular md-mode="indeterminate" ng-show="loadingIncidents"></md-progress-circular>
         </div>
 
-        </ br>
+        <br />
 
         <div class="row">
             <h3>{{results_num}}</h3>

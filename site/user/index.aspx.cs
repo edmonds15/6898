@@ -13,6 +13,7 @@ namespace _6898.user {
             if (!_6898.utilities.Validate.isUser(user)) {
                 Response.Redirect("../bad_permissions.aspx");
             }
+            nameLiteral.Mode = LiteralMode.Encode;
             nameLiteral.Text = user;
             if (_6898.utilities.Validate.isAdmin(user)) {
                 roleLiteral.Text = "Administrator";

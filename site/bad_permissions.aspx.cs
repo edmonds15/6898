@@ -9,6 +9,7 @@ namespace _6898 {
     public partial class bad_permissions : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
             string user = HttpContext.Current.User.Identity.Name.Split("\\".ToCharArray())[1];
+            nameLiteral.Mode = LiteralMode.Encode;
             nameLiteral.Text = user;
         }
     }
