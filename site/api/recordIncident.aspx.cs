@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace _6898.api {
     public partial class recordIncident : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
+            // Check if requester is a user
             string user = HttpContext.Current.User.Identity.Name.Split("\\".ToCharArray())[1];
             if (!_6898.utilities.Validate.isUser(user)) {
                 Response.End();
@@ -23,6 +23,7 @@ namespace _6898.api {
             SqlConnection conn = new SqlConnection(connectInfo);
             try {
                 conn.Open();
+                // Insert incident values
                 string query = @"INSERT INTO [Incident_Report].[dbo].[Incident_History] VALUES (@Number, @Type_Id, @Location_Id, @Comment, GETDATE(), @Username)";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Number", Convert.ToInt32(number));

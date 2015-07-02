@@ -4,7 +4,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace _6898.api {
@@ -21,6 +20,7 @@ namespace _6898.api {
             SqlConnection conn = new SqlConnection(connectInfo);
             try {
                 conn.Open();
+                // Get all incidents, join school names and incident names, and filter by inputs
                 string query = @"SELECT h.Id, h.Number, h.TypeId, h.LocationId, h.Comment, h.TimeDate, h.Creator, e.EntityID, e.[Entity Name], i.Id, i.Type FROM [Incident_Report].[dbo].[Incident_History] h
                                     JOIN [SKYDATA].[Student].[dbo].[Entity] e ON h.LocationId = e.EntityID
                                     JOIN [Incident_Report].[dbo].[Incident] i ON h.TypeId = i.Id
@@ -79,6 +79,7 @@ namespace _6898.api {
                 }
                 conn.Close();
 
+                // Send result
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 string incidentsJson = serializer.Serialize(incidents);
                 Response.Write(incidentsJson);

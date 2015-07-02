@@ -4,7 +4,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace _6898.api {
@@ -15,6 +14,7 @@ namespace _6898.api {
             SqlConnection conn = new SqlConnection(connectInfo);
             try {
                 conn.Open();
+                // Get all schools from Skydata
                 string query = @"SELECT * FROM  [Student].[dbo].[Entity] ORDER BY [Entity Name] ASC";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -38,6 +38,7 @@ namespace _6898.api {
                 }
                 conn.Close();
 
+                // Send result
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 string locationsJson = serializer.Serialize(locations);
                 Response.Write(locationsJson);

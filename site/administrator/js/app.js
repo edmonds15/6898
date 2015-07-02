@@ -5,6 +5,7 @@
   "incidentAdminControllers"
 ]);
 
+// Configure the different routes and theme
 incidentAdminApp.config(["$routeProvider", "$mdThemingProvider", function ($routeProvider, $mdThemingProvider) {
     $routeProvider.when("/", {
         templateUrl: "partials/home.html",

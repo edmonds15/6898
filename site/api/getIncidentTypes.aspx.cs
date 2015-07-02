@@ -4,7 +4,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace _6898.api {
@@ -15,7 +14,8 @@ namespace _6898.api {
             SqlConnection conn = new SqlConnection(connectInfo);
             try {
                 conn.Open();
-                string query = @"SELECT * FROM [Incident_Report].[dbo].[Incident] ORDER BY Id";
+                // Get all incident types
+                string query = @"SELECT * FROM [Incident_Report].[dbo].[Incident] ORDER BY Type ASC";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -27,6 +27,7 @@ namespace _6898.api {
                 }
                 conn.Close();
 
+                // Send result
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 string incidentsJson = serializer.Serialize(incidents);
                 Response.Write(incidentsJson);

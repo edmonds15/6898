@@ -2,6 +2,7 @@
 // The alert message that appears when a database request fails.
 var dangerMessage = "FATAL: database failed. Refresh and try again, or contact.";
 
+// Controller for the "Change Users" page
 incidentAdminControllers.controller("UsersCtrl",
         ["$scope", "$modal", "$timeout", "dataSvc", function ($scope, $modal, $timeout, dataSvc) {
     $scope.dangerAlerts = [];
@@ -116,7 +117,7 @@ incidentAdminControllers.controller("UsersCtrl",
         $scope.goodAlerts.splice(index, 1);
     }
 
-    // Pull all users and add them to page
+    // Pull all users and put them on page
     function refreshUsers() {
         dataSvc.getUsers().then(function (response) {
             $scope.users = response;
@@ -128,6 +129,7 @@ incidentAdminControllers.controller("UsersCtrl",
 
 }]);
 
+// Controller for the "Change Incidents" page
 incidentAdminControllers.controller("IncidentsCtrl",
         ["$scope", "$modal", "$timeout", "dataSvc", function ($scope, $modal, $timeout, dataSvc) {
     $scope.loadingIncidents = false;
@@ -136,6 +138,7 @@ incidentAdminControllers.controller("IncidentsCtrl",
     $scope.results = [];
     $scope.results_num = "";
 
+    // Pull locations and put them in location dropdown
     dataSvc.getLocations().then(function (response) {
         $scope.locations = response;
     }, function (error) {
@@ -143,6 +146,7 @@ incidentAdminControllers.controller("IncidentsCtrl",
         $scope.dangerAlerts.push({ msg: dangerMessage });
     });
 
+    // Pull incident types and put them in incident dropdown
     dataSvc.getIncidentTypes().then(function (response) {
         $scope.incidents = response;
     }, function (error) {
@@ -150,6 +154,7 @@ incidentAdminControllers.controller("IncidentsCtrl",
         $scope.dangerAlerts.push({ msg: dangerMessage });
     });
 
+    // Wipe all fields and previous results
     $scope.clearFields = function (ev) {
         $scope.loc = null;
         $scope.inc = null;
@@ -158,13 +163,14 @@ incidentAdminControllers.controller("IncidentsCtrl",
         $scope.date_before = null;
         $scope.results_num = "";
         $scope.results = [];
-        $scope.goodAlerts = [];
     }
 
+    // Run the search
     $scope.searchIncidents = function () {
         updateIncidents();
     }
 
+    // Get clicked incident, open modal with it, wait for finish
     $scope.changeIncident = function (ev) {
         // Get the id of the clicked incident
         var id = ev.currentTarget.getAttribute("data-id");
@@ -198,6 +204,7 @@ incidentAdminControllers.controller("IncidentsCtrl",
         });
     }
 
+    // Get search params and display matching incidents
     function updateIncidents() {
         $scope.loadingIncidents = true;
         // Set date params to 1980-2500 if not specified
@@ -224,11 +231,13 @@ incidentAdminControllers.controller("IncidentsCtrl",
     }
 }]);
 
+// Controller for the "Change Contacts" page
 incidentAdminControllers.controller("EditContactsCtrl",
         ["$scope", "dataSvc", function ($scope, dataSvc) {
     //Hopefully integrate ReGroup Member API soon
     $scope.alerts = [];
 
+    // Pull contacts and put them on page
     dataSvc.getContacts().then(function (response) {
         $scope.contacts = response;
     }, function (error) {
@@ -236,18 +245,22 @@ incidentAdminControllers.controller("EditContactsCtrl",
         $scope.alerts.push({ msg: dangerMessage });
     })
 
+    // TODO describe this function
     $scope.editContact = function (ev) {
         // Get the id of the clicked contact
         var id = ev.currentTarget.getAttribute("data-id");
+        // TODO implement with regroup
         alert("You clicked id " + id + ", ReGroup hopefully implemented soon.");
     }
 }]);
 
+// Controller for the add user modal
 incidentAdminControllers.controller("AddUserModalCtrl",
         ["$scope", "$modalInstance", "dataSvc", function ($scope, $modalInstance, dataSvc) {
     $scope.dangerAlerts = [];
     $scope.warningAlerts = [];
 
+    // Validate input, then send info to be added to database
     $scope.add = function () {
         $scope.warningAlerts = [];
         // Check if username is filled
@@ -283,15 +296,18 @@ incidentAdminControllers.controller("AddUserModalCtrl",
         });
     }
 
+    // Cancel the modal
     $scope.close = function () {
         $modalInstance.dismiss();
     }
 
+    // Close the selected alert
     $scope.closeAlert = function (index) {
         $scope.warningAlerts.splice(index, 1);
     }
 }]);
 
+// Controller for the edit user modal
 incidentAdminControllers.controller("EditUserModalCtrl",
         ["$scope", "$modalInstance", "dataSvc", "chosen",
         function ($scope, $modalInstance, dataSvc, chosen) {
@@ -300,6 +316,7 @@ incidentAdminControllers.controller("EditUserModalCtrl",
     $scope.dangerAlerts = [];
     $scope.warningAlerts = [];
 
+    // Validate input, then send new info
     $scope.save = function () {
         $scope.warningAlerts = [];
         // Check if username is filled
@@ -327,26 +344,32 @@ incidentAdminControllers.controller("EditUserModalCtrl",
         });
     }
 
+    // Cancel the modal
     $scope.close = function () {
         $modalInstance.dismiss();
     }
 
+    //Close the selected alert
     $scope.closeAlert = function (index) {
         $scope.warningAlerts.splice(index, 1);
     }
 }]);
 
+// Controller for the remove user modal
 incidentAdminControllers.controller("RemoveUserModalCtrl",
         ["$scope", "$modalInstance", function ($scope, $modalInstance) {
+    // Send yes message to delete
     $scope.yes = function () {
         $modalInstance.close();
     }
 
+    // Send no message to delete
     $scope.no = function () {
         $modalInstance.dismiss();
     }
 }]);
 
+// Controller for the change incident modal
 incidentAdminControllers.controller("ChangeIncidentModalCtrl",
         ["$scope", "$modal", "$modalInstance", "dataSvc", "chosen",
         function ($scope, $modal, $modalInstance, dataSvc, chosen) {
@@ -358,10 +381,7 @@ incidentAdminControllers.controller("ChangeIncidentModalCtrl",
     $scope.comment = chosen.comment;
     $scope.alerts = [];
 
-    $scope.close = function () {
-        $modalInstance.dismiss();
-    }
-
+    // Send the incident info to be edited, and save results
     $scope.edit = function () {
         var id = chosen.id;
         var modal = $modal.open({
@@ -387,6 +407,7 @@ incidentAdminControllers.controller("ChangeIncidentModalCtrl",
         });
     }
 
+    // Send confirmation, then delete selected incident
     $scope.delete = function () {
         var id = chosen.id;
         var modal = $modal.open({
@@ -406,11 +427,15 @@ incidentAdminControllers.controller("ChangeIncidentModalCtrl",
         }, function () {
             console.log("modalDeleteIncident Dismissed");
         });
-        
     }
-    
+
+    // Cancel the modal
+    $scope.close = function () {
+        $modalInstance.dismiss();
+    }
 }]);
 
+// Controller for the edit incident modal
 incidentAdminControllers.controller("EditIncidentModalCtrl",
         ["$scope", "$modalInstance", "dataSvc", "fields",
         function ($scope, $modalInstance, dataSvc, fields) {
@@ -423,6 +448,7 @@ incidentAdminControllers.controller("EditIncidentModalCtrl",
     $scope.dangerAlerts = [];
     $scope.warningAlerts = [];
 
+    // Pull locations and put them in dropdown box
     dataSvc.getLocations().then(function (response) {
         $scope.locations = response;
     }, function (error) {
@@ -430,6 +456,7 @@ incidentAdminControllers.controller("EditIncidentModalCtrl",
         $scope.alerts.push({ msg: dangerMessage });
     });
 
+    // Pull incident types and put them in dropdown box
     dataSvc.getIncidentTypes().then(function (response) {
         $scope.incidents = response;
     }, function (error) {
@@ -437,10 +464,7 @@ incidentAdminControllers.controller("EditIncidentModalCtrl",
         $scope.alerts.push({ msg: dangerMessage });
     });
 
-    $scope.close = function () {
-        $modalInstance.dismiss();
-    }
-
+    // Take the fields and send them to be edited
     $scope.save = function () {
         var change = {
             id: fields.id,
@@ -451,17 +475,25 @@ incidentAdminControllers.controller("EditIncidentModalCtrl",
             inc: $scope.inc,
             comment: $scope.commentEdit
         };
+
         $modalInstance.close(change);
     }
 
+    // Cancel the modal
+    $scope.close = function () {
+        $modalInstance.dismiss();
+    }
 }]);
 
+// Controller for the delete incident modal
 incidentAdminControllers.controller("DeleteIncidentModalCtrl",
         ["$scope", "$modalInstance", function ($scope, $modalInstance) {
+    // Send yes message to delete
     $scope.yes = function () {
         $modalInstance.close();
     }
 
+    // Send no message to delete
     $scope.no = function () {
         $modalInstance.dismiss();
     }

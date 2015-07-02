@@ -4,12 +4,12 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace _6898.api {
     public partial class getWhoNotify : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
+            // Check if requester is a user
             string user = HttpContext.Current.User.Identity.Name.Split("\\".ToCharArray())[1];
             if (!_6898.utilities.Validate.isUser(user)) {
                 Response.End();
@@ -23,6 +23,7 @@ namespace _6898.api {
             SqlConnection conn = new SqlConnection(connectInfo);
             try {
                 conn.Open();
+                // Get all notifications that match the incident, and join with the contact info
                 string query = @"SELECT n.Id, n.Code, n.Name As Department, c.Name, c.Title, c.Ext, c.Home_Number, c.Cell_Number FROM Notification n
                                     LEFT JOIN Contact c ON n.Code = c.Code
                                     WHERE CAST(n.Incident_Id AS VARCHAR(20)) LIKE @Incident_Id";
@@ -54,6 +55,7 @@ namespace _6898.api {
                 }
                 conn.Close();
 
+                // Send result
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 string incidentsJson = serializer.Serialize(notifys);
                 Response.Write(incidentsJson);

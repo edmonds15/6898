@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace _6898.api {
     public partial class addUser : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
+            // Check if requester is an admin
             string user = HttpContext.Current.User.Identity.Name.Split("\\".ToCharArray())[1];
             if (!_6898.utilities.Validate.isAdmin(user)) {
                 Response.End();
@@ -21,6 +21,7 @@ namespace _6898.api {
             SqlConnection conn = new SqlConnection(connectionString);
             try {
                 conn.Open();
+                // Add user into database if name does not match
                 string query = @"INSERT INTO Users
                                 SELECT @Username, @Role
                                 WHERE NOT EXISTS (SELECT Id FROM Users WHERE Username = @Username)";

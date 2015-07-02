@@ -5,6 +5,7 @@
   "incidentUserControllers"
 ]);
 
+// Configure the different routes and theme
 incidentUserApp.config(["$routeProvider", "$mdThemingProvider", function ($routeProvider, $mdThemingProvider) {
     $routeProvider.when("/", {
         templateUrl: "partials/newIncident.html",

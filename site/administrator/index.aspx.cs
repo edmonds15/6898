@@ -13,6 +13,8 @@ namespace _6898.administrator {
             if (!_6898.utilities.Validate.isAdmin(user)) {
                 Response.Redirect("../bad_permissions.aspx");
             }
+
+            // Set literals to not run text as HTML, to avoid scripting vulnerabilities
             nameLiteral.Mode = LiteralMode.Encode;
             nameLiteral.Text = user;
             roleLiteral.Text = "Administrator";

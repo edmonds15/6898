@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 namespace _6898.api {
     public partial class getContacts : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
+            // Check if requester is an admin
             string user = HttpContext.Current.User.Identity.Name.Split("\\".ToCharArray())[1];
             if (!_6898.utilities.Validate.isAdmin(user)) {
                 Response.End();
@@ -20,6 +21,7 @@ namespace _6898.api {
             SqlConnection conn = new SqlConnection(connectInfo);
             try {
                 conn.Open();
+                // Get all contacts
                 string query = @"SELECT * FROM [Incident_Report].[dbo].[Contact] ORDER BY Name ASC";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -37,6 +39,7 @@ namespace _6898.api {
 
                 conn.Close();
 
+                // Send result
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 string incidentsJson = serializer.Serialize(contacts);
                 Response.Write(incidentsJson);

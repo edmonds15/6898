@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
 using System.Web.Script.Serialization;
+using System.Web.UI.WebControls;
 
 namespace _6898.api {
     public partial class getUsers : System.Web.UI.Page {
@@ -15,6 +14,7 @@ namespace _6898.api {
             SqlConnection conn = new SqlConnection(connectInfo);
             try {
                 conn.Open();
+                // Get all users
                 string query = "SELECT * FROM [Incident_Report].[dbo].[Users] ORDER BY Role DESC, Username ASC";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -27,6 +27,7 @@ namespace _6898.api {
                 }
                 conn.Close();
 
+                // Send result
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 string usersJson = serializer.Serialize(users);
                 Response.Write(usersJson);
