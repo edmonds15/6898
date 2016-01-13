@@ -1,0 +1,25 @@
+﻿<ul class="nav nav-tabs">
+    <li role="presentation"><a href="#/">New Incident</a></li>
+    <li role="presentation" class="active"><a href="#/update/">Update Incidents</a></li>
+    <li role="presentation"><a href="#/search/">Search Incidents</a></li>
+    <li role="presentation"><a href="#/help/">Help</a></li>
+</ul>
+<alert ng-repeat="alert in dangerAlerts" type="danger">{{alert.msg}}</alert>
+<alert ng-repeat="alert in goodAlerts" type="success" close="closeGoodAlert($index)">{{alert.msg}}</alert>
+<h2>Update Reported Incidents</h2>
+<div class="container">
+    <div class="row">
+        <md-select class="incident" id="chooseInc" placeholder="Choose an Incident" ng-model="inc">
+            <md-option ng-repeat="incident in incidents" value="{{incident.id}}">Incident {{incident.num}} - {{incident.type}} - {{incident.location}} - {{incident.date}}</md-option>
+        </md-select>
+    </div>
+    <div class="row">
+        <md-input-container class="comments" flex>
+            <label>Update</label>
+            <textarea ng-model="comment" columns="1" md-maxlength="100" maxlength="100"></textarea>
+        </md-input-container>
+    </div>
+    <div class="row">
+        <md-button class="md-raised md-warn" ng-click="updateIncident($event)">Update and Notify</md-button>
+    </div>
+</div>

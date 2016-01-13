@@ -9,10 +9,13 @@
 incidentUserApp.config(["$routeProvider", "$mdThemingProvider", function ($routeProvider, $mdThemingProvider) {
     $routeProvider.when("/", {
         templateUrl: "partials/newIncident.html",
-        controller: "NewIncidentCtrl",
+        controller: "NewIncidentCtrl"
+    }).when("/update", {
+        templateUrl: "partials/updateIncidents.html",
+        controller: "UpdateIncidentsCtrl"
     }).when("/search", {
         templateUrl: "partials/searchIncidents.html",
-        controller: "SearchIncidentCtrl",
+        controller: "SearchIncidentCtrl"
     }).when("/help", {
         templateUrl: "partials/help.html"
     }).otherwise({

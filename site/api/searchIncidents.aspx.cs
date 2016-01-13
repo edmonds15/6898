@@ -21,15 +21,15 @@ namespace _6898.api {
             try {
                 conn.Open();
                 // Get all incidents, join school names and incident names, and filter by inputs
-                string query = @"SELECT h.Id, h.Number, h.TypeId, h.LocationId, h.Comment, h.TimeDate, h.Creator, e.EntityID, e.[Entity Name], i.Id, i.Type FROM [Incident_Report].[dbo].[Incident_History] h
-                                    JOIN [SKYDATA].[Student].[dbo].[Entity] e ON h.LocationId = e.EntityID
+                string query = @"SELECT h.Id, h.Number, h.TypeId, h.LocationId, h.Comment, h.TimeDate, h.Creator, l.locationId, l.locationName, i.Id, i.Type FROM [Incident_Report].[dbo].[Incident_History] h
+                                    JOIN [Incident_Report].[dbo].[Locations] l ON h.LocationId = l.locationId
                                     JOIN [Incident_Report].[dbo].[Incident] i ON h.TypeId = i.Id
                                     WHERE CAST(h.TypeId AS VARCHAR(20)) LIKE @TypeId
                                     AND CAST(h.LocationId AS VARCHAR(20)) LIKE @LocationId
                                     AND h.Comment LIKE @Comment
                                     AND h.TimeDate > @TimeAfter
                                     AND h.TimeDate < @TimeBefore
-                                    ORDER BY h.TimeDate DESC";
+                                    ORDER BY h.Number DESC";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 if (incident == null) {
@@ -67,7 +67,7 @@ namespace _6898.api {
                     inc.Add("type_id", reader.GetInt32(reader.GetOrdinal("TypeId")).ToString());
                     inc.Add("type", reader.GetString(reader.GetOrdinal("Type")));
                     inc.Add("location_id", reader.GetInt32(reader.GetOrdinal("LocationId")).ToString());
-                    inc.Add("location", reader.GetString(reader.GetOrdinal("Entity Name")));
+                    inc.Add("location", reader.GetString(reader.GetOrdinal("locationName")));
                     if (!reader.IsDBNull(reader.GetOrdinal("Comment"))) {
                         inc.Add("comment", reader.GetString(reader.GetOrdinal("Comment")));
                     }

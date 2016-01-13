@@ -78,10 +78,81 @@ dataServices.factory("dataSvc", ["$http", "$q", function ($http, $q) {
         return deferred.promise;
     }
 
-    // TODO Write notification method using Regroup API
-    function regroupNotify() {
-        var alert = { msg: "Regroup would have been notified." };
-        return alert;
+    // Notifies Regroup of the given incident
+    function regroupNotify(location, incident, comment) {
+        var deferred = $q.defer();
+        var url = "../api/getRegroupInfo.aspx?location=" + location + "&incident=" + incident;
+        $http.get(url).then(function (result) {
+            var data = result.data;
+            if (angular.isObject(data)) {
+                // If Regroup API changes, make changes here.
+                var xmlMsg = "<?xml version=\"1.0\"?><topic>";
+
+                // Chris testing
+                //var commentMsg = comment + " -- " + data.incidentType + " - " + data.locationName;            // Chris added this line 20150925 ... use this if want to show incident & location
+                var commentMsg = comment + " -- " + data.locationName;                                          // This just shows Location
+                // end Chris testing
+
+                xmlMsg += "<subject>" + data.incidentType + " at " + data.locationName + "</subject>";
+                //xmlMsg += "<body><![CDATA[Description: " + comment + "]]></body>";                          // Chris added comment 20150925
+                xmlMsg += "<body><![CDATA[" + commentMsg + "]]></body>";                         // Chris added this line 20150925
+                xmlMsg += "<mail>1</mail><sms>1</sms>";
+                xmlMsg += "<group_id>" + data.groupId + "</group_id></topic>";
+                $http.post("https://regroup.com/api/v1/topics?api_key=1a20bc69ff1d932d972b27d760a1a2fe", xmlMsg, { headers: { "Content-Type": "application/xml" } });
+                deferred.resolve({ msg: "Regroup notified." });
+            } else {
+                deferred.reject({ msg: "Regroup not notified." });
+            }
+        }, function () {
+            deferred.reject({ msg: "Regroup not notified." });
+        });
+        return deferred.promise;
+    }
+
+    function getIncidents() {
+        var deferred = $q.defer();
+        $http.get("../api/getIncidents.aspx").then(function (result) {
+            var data = result.data;
+            if (angular.isObject(data)) {
+                deferred.resolve(data);
+            } else {
+                deferred.reject(data);
+            }
+        }, function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    }
+
+    function getIncidentInfo(id) {
+        var deferred = $q.defer();
+        $http.get("../api/getIncidentInfo.aspx?id=" + id).then(function (result) {
+            var data = result.data;
+            if (angular.isObject(data)) {
+                deferred.resolve(data);
+            } else {
+                deferred.reject(data);
+            }
+        }, function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    }
+
+    function updateIncident(id, update) {
+        var deferred = $q.defer();
+        var url = "../api/updateIncident.aspx?id=" + id + "&update=" + update;
+        $http.get(url).then(function (result) {
+            var data = result.data;
+            if (data.charAt(0) == "1") {
+                deferred.resolve(data);
+            } else {
+                deferred.reject(data);
+            }
+        }, function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
     }
 
     // Deletes the incident with the given id
@@ -142,6 +213,7 @@ dataServices.factory("dataSvc", ["$http", "$q", function ($http, $q) {
         var deferred = $q.defer();
         // Send request
         $http.get("../api/getUsers.aspx").then(function (result) {
+
             var users = result.data;
             // Make sure response is valid
             if (angular.isObject(users)) {
@@ -236,37 +308,21 @@ dataServices.factory("dataSvc", ["$http", "$q", function ($http, $q) {
         return deferred.promise;
     }
 
-    // Gets all contacts
-    function getContacts() {
-        var deferred = $q.defer();
-        // Send request
-        $http.get("../api/getContacts.aspx").then(function (result) {
-            var data = result.data;
-            // Make sure response is valid
-            if (angular.isObject(data)) {
-                deferred.resolve(data);
-            } else {
-                deferred.reject(data);
-            }
-        }, function (error) {
-            deferred.reject(error);
-        });
-        return deferred.promise;
-    }
-
     return {
         getLocations: getLocations,
         getIncidentTypes: getIncidentTypes,
         getIncidentNumber: getIncidentNumber,
         recordIncident: recordIncident,
         regroupNotify: regroupNotify,
+        getIncidents: getIncidents,
+        getIncidentInfo: getIncidentInfo,
+        updateIncident: updateIncident,
         deleteIncident: deleteIncident,
         searchIncidents: searchIncidents,
         getUsers: getUsers,
         addUser: addUser,
         deleteUser: deleteUser,
         editIncident: editIncident,
-        getWhoNotify: getWhoNotify,
-        getContacts: getContacts
+        getWhoNotify: getWhoNotify
     };
 }]);

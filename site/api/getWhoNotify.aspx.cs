@@ -53,6 +53,7 @@ namespace _6898.api {
                     }
                     notifys.Add(notify);
                 }
+                reader.Close();
                 conn.Close();
 
                 // Send result

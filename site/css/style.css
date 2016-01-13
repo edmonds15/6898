@@ -24,5 +24,16 @@ p {
 }
 
 md-select {
-    margin-left: 13em;
+    width: 300px;
+    display: block;
+    margin: auto;
+}
+
+.comments {
+    width: 500px;
+    margin: auto;
+}
+
+#chooseInc {
+    width: 650px;
 }

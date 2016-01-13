@@ -204,6 +204,11 @@ incidentAdminControllers.controller("IncidentsCtrl",
         });
     }
 
+    // Close the selected alert
+    $scope.closeAlert = function (index) {
+        $scope.goodAlerts.splice(index, 1);
+    }
+
     // Get search params and display matching incidents
     function updateIncidents() {
         $scope.loadingIncidents = true;
@@ -228,29 +233,6 @@ incidentAdminControllers.controller("IncidentsCtrl",
             $scope.results_num = "";
             $scope.dangerAlerts.push({ msg: dangerMessage });
         });
-    }
-}]);
-
-// Controller for the "Change Contacts" page
-incidentAdminControllers.controller("EditContactsCtrl",
-        ["$scope", "dataSvc", function ($scope, dataSvc) {
-    //Hopefully integrate ReGroup Member API soon
-    $scope.alerts = [];
-
-    // Pull contacts and put them on page
-    dataSvc.getContacts().then(function (response) {
-        $scope.contacts = response;
-    }, function (error) {
-        console.log(error);
-        $scope.alerts.push({ msg: dangerMessage });
-    })
-
-    // TODO describe this function
-    $scope.editContact = function (ev) {
-        // Get the id of the clicked contact
-        var id = ev.currentTarget.getAttribute("data-id");
-        // TODO implement with regroup
-        alert("You clicked id " + id + ", ReGroup hopefully implemented soon.");
     }
 }]);
 

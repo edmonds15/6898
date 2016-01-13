@@ -25,6 +25,7 @@ namespace _6898.api {
                     user.Add("role", reader.GetString(reader.GetOrdinal("Role")));
                     users.Add(user);
                 }
+                reader.Close();
                 conn.Close();
 
                 // Send result
